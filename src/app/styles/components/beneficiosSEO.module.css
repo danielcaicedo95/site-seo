@@ -1,0 +1,109 @@
+/* Estilos generales */
+.futurista {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #fff;
+    padding: 5rem 2rem;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .gradientText {
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #00ffcc, #ff0099);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .parrafoIntro {
+    font-size: 1.2rem;
+    color: #d1d5db;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+  }
+  
+  /* Beneficio Card */
+  .beneficioCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease-in-out;
+    max-width: 900px;
+    margin: 2rem auto;
+  }
+  
+  .beneficioCard:hover {
+    transform: scale(1.03);
+  }
+  
+  /* Para alternar la posición de imagen/texto */
+  .reverseCard {
+    flex-direction: column-reverse;
+  }
+  
+  /* Contenedor de imagen */
+  .imagenContainer {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .imagen {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 255, 204, 0.5);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .imagen:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Contenedor de texto */
+  .textoContainer {
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .neonText {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #00ffcc;
+    text-shadow: 0 0 5px #00ffcc, 0 0 10px #ff0099;
+  }
+  
+  .descripcion {
+    font-size: 1.1rem;
+    color: #d1d5db;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Responsive */
+  @media (min-width: 768px) {
+    .beneficioCard {
+      flex-direction: row;
+    }
+  
+    /* Solo las tarjetas pares invierten la posición */
+    .beneficioCard:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+  
+    .textoContainer {
+      text-align: left;
+      width: 50%;
+    }
+  
+    .imagenContainer {
+      width: 50%;
+    }
+  }
+  
+  
+  

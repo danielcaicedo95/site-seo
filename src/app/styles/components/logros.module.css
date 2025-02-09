@@ -1,0 +1,15 @@
+@keyframes neon-glow {
+    0% { box-shadow: 0 0 5px rgba(0, 174, 255, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(0, 174, 255, 0.8); }
+    100% { box-shadow: 0 0 5px rgba(0, 174, 255, 0.5); }
+  }
+  
+  .shadow-neon {
+    animation: neon-glow 1.5s infinite alternate;
+  }
+  
+  .shadow-glow {
+    box-shadow: 0 0 8px rgba(0, 174, 255, 0.6);
+  }
+  
+  

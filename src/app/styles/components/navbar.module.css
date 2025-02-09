@@ -1,0 +1,154 @@
+/* Reset básico */
+.navbar,
+.navbar * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar */
+.navbar {
+  background: transparent;
+  color: rgb(0, 0, 0);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  transition: background 0.4s ease-in-out;
+}
+
+.navbar.scrolled {
+  background: rgba(26, 26, 26, 0.5);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Contenedor */
+.navbarContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+.navbarLogo img {
+  height: 50px;
+  width: auto;
+  filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.3));
+}
+
+/* Menú */
+.navbarMenu {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbarMenu li {
+  margin-left: 2rem;
+}
+
+.navbarMenu a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbarMenu a:hover {
+  color: #FFD700;
+}
+
+/* Botón "Hablemos" */
+.btnWhatsapp {
+  background: linear-gradient(135deg, #25d366, #128C7E);
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.5);
+}
+
+.btnWhatsapp:hover {
+  transform: scale(1.05);
+}
+
+/* Botón Menú Móvil */
+.navbarToggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  z-index: 1001; /* Asegura que esté por encima del menú */
+}
+
+.bar {
+  background: white;
+  height: 3px;
+  width: 30px;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
+
+/* Menú móvil */
+@media (max-width: 768px) {
+  .navbarMenu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(135deg, #111, #222);
+    padding-top: 5rem;
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.8);
+  }
+
+  .navbarMenu.active {
+    transform: translateX(0);
+  }
+
+  .navbarMenu li {
+    padding: 1rem;
+    border-bottom: 1px solid #444;
+    text-align: center;
+  }
+
+  .btnWhatsapp {
+    display: none;
+  }
+
+  .navbarToggle {
+    display: flex;
+  }
+
+  .closeBtn {
+    background: none;
+    color: white;
+    font-size: 1.8rem;
+    border: none;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .closeBtn:hover {
+    transform: rotate(180deg);
+  }
+}

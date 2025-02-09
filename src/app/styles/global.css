@@ -1,0 +1,115 @@
+/* Estilos generales que no afectan la barra de navegación */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center; /* Centrado de texto */
+}
+
+/* Mantener márgenes claros en el contenido */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Encabezados elegantes */
+h1 {
+    color: #007BFF;
+    font-size: 2.5rem;
+    margin: 1.5rem 0;
+}
+
+h2 {
+    color: #333;
+    font-size: 2rem;
+    margin: 1.2rem 0;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #666;
+    margin: 0.8rem 0;
+}
+
+/* Enlaces bien visibles */
+a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+/* Mantener la barra de navegación en su propio flujo de estilos */
+.navbar {
+    width: 100%;
+    background-color: #333;
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    /* Preservar espacio para la barra en móviles */
+    .navbar {
+        padding: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    p {
+        font-size: 0.85rem;
+    }
+
+    /* Mejor tamaño de barra en pantallas pequeñas */
+    .navbar {
+        padding: 0.6rem;
+    }
+}

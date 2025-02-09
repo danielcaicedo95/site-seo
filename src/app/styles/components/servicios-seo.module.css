@@ -1,0 +1,96 @@
+/* 🔥 Diseño futurista */
+.servicios-seo {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #fff;
+    padding: 5rem 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 0px 20px rgba(0, 255, 204, 0.3);
+  }
+  
+  /* 🎇 Títulos con efecto neón */
+  .servicio-titulo {
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #00ffcc, #ff0099);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+  }
+  
+  /* 🔷 Tarjetas con efecto futurista */
+  .servicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 2rem;
+    backdrop-filter: blur(15px);
+    transition: transform 0.3s ease-in-out;
+    max-width: 900px;
+    margin: 2rem auto;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+  }
+  
+  .servicio:hover {
+    transform: scale(1.03);
+  }
+  
+  /* 📸 Imagen */
+  .servicio-imagen-container {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .servicio-imagen {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 255, 204, 0.5);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .servicio-imagen:hover {
+    transform: scale(1.05);
+  }
+  
+  /* 📝 Texto */
+  .servicio-texto {
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .servicio-descripcion {
+    font-size: 1.1rem;
+    color: #d1d5db;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* 📱 Responsividad */
+  @media (min-width: 768px) {
+    .servicio {
+      flex-direction: row;
+    }
+  
+    .reverse-servicio {
+      flex-direction: row-reverse;
+    }
+  
+    .servicio-texto {
+      text-align: left;
+      width: 50%;
+    }
+  
+    .servicio-imagen-container {
+      width: 50%;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .servicio {
+      flex-direction: column !important;
+    }
+  }
+  

@@ -1,101 +1,85 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import "./styles/global.css";
+import Navbar from "@/app/components/navbar";
+import Portada from "@/app/components/portada";
+import Carrusel from "@/app/components/carrusel";
+import Presentacion from "@/app/components/presentacion";
+import ServiciosSeo from "@/app/components/servicios-seo";
+import Cms from "@/app/components/cms";
+import Logros from "@/app/components/logros";
+import Reseñas from "@/app/components/reseñas"; 
+import Footer from "@/app/components/footer"; 
+
+// 🔹 Definir la interfaz aquí directamente para evitar errores
+interface Servicio {
+  titulo: string;
+  descripcion: string;
+  enlace: string;
+  imagen: string;
+  posicionImagen: "left" | "right";
+}
+
+const Home: React.FC = () => {
+  const portadaData = {
+    imagen: "/images/portada1.jpg",
+    titulo: "Bienvenidos a Nuestro Servicio SEO",
+    descripcion: "Ofrecemos soluciones personalizadas de SEO para mejorar la visibilidad de tu sitio web.",
+  };
+
+  const presentacionData = {
+    imageSrc: "/images/logo-presentacion.png",
+    title: "¿Por qué elegirnos?",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget nulla ut odio faucibus interdum. Curabitur tristique libero vel metus tincidunt fringilla. Proin euismod consectetur mi at gravida. Suspendisse potenti. Fusce sit amet lacus eget justo venenatis pellentesque vel sit amet nisi.",
+  };
+
+  const serviciosData: Servicio[] = [
+    {
+      titulo: "SEO Técnico",
+      descripcion: "Optimizamos la estructura y el rendimiento de tu sitio web para un mejor rastreo por motores de búsqueda.",
+      enlace: "/seo-tecnico",
+      imagen: "/images/seo-tecnico.jpg",
+      posicionImagen: "left",
+    },
+    {
+      titulo: "SEO On Page",
+      descripcion: "Mejoramos la relevancia de tus páginas mediante optimización de contenido y etiquetas meta.",
+      enlace: "/seo-on-page",
+      imagen: "/images/seo-onpage.jpg",
+      posicionImagen: "right",
+    },
+    {
+      titulo: "SEO Off Page",
+      descripcion: "Aumentamos la autoridad de tu sitio mediante construcción de enlaces y estrategias de contenido.",
+      enlace: "/seo-off-page",
+      imagen: "/images/seo-offpage.jpg",
+      posicionImagen: "left",
+    },
+    {
+      titulo: "SEO IA",
+      descripcion: "Impulsamos tu estrategia SEO con inteligencia artificial para análisis avanzado y automatización.",
+      enlace: "/seo-ia",
+      imagen: "/images/seo-ia.jpg",
+      posicionImagen: "right",
+    },
+  ];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div>
+      <Navbar />
+      <Portada imagen={portadaData.imagen} titulo={portadaData.titulo} descripcion={portadaData.descripcion} />
+      <Carrusel />
+      <Presentacion imageSrc={presentacionData.imageSrc} title={presentacionData.title} text={presentacionData.text} />
+      
+      {/* Sección de Servicios SEO con imágenes */}
+      <ServiciosSeo servicios={serviciosData} />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <Cms />
+      <Logros />
+      <Reseñas />
+      <Footer />
     </div>
   );
-}
+};
+
+export default Home;
