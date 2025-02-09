@@ -23,7 +23,6 @@ const logos = [
 
 export default function Carrusel() {
   const [itemsToShow, setItemsToShow] = useState(5);
-  const [speed, setSpeed] = useState(20); // Velocidad inicial (segundos)
   const [isMobile, setIsMobile] = useState(false);
   const controls = useAnimation();
   const containerRef = useRef(null);
@@ -41,30 +40,25 @@ export default function Carrusel() {
   }, []);
 
   useEffect(() => {
-    const animateScroll = async () => {
-      while (true) {
-        await controls.start({ x: "-100%", transition: { duration: speed, ease: "linear" } });
-        await controls.set({ x: "0%" });
-      }
+    let animationFrame: number;
+
+    const animateScroll = () => {
+      controls.start({ x: "-100%", transition: { duration: 15, ease: "linear" } })
+        .then(() => controls.set({ x: "0%" }))
+        .then(() => {
+          animationFrame = requestAnimationFrame(animateScroll);
+        });
     };
 
     animateScroll();
-  }, [controls, speed]);
-
-  const handleSpeedChange = (newSpeed: number) => {
-    setSpeed(newSpeed);
-    setTimeout(() => setSpeed(20), 1000);
-  };
+    return () => cancelAnimationFrame(animationFrame);
+  }, [controls]);
 
   return (
     <div className="carrusel-container">
       {/* Flecha izquierda */}
       {!isMobile && (
-        <button
-          className="carrusel-button left"
-          onClick={() => handleSpeedChange(5)}
-          aria-label="Anterior"
-        >
+        <button className="carrusel-button left" aria-label="Anterior">
           <ChevronLeft size={30} />
         </button>
       )}
@@ -74,9 +68,6 @@ export default function Carrusel() {
         ref={containerRef}
         className="carrusel-track"
         animate={controls}
-        drag="x"
-        dragConstraints={{ left: -100, right: 100 }}
-        dragElastic={0.2}
         whileTap={{ cursor: "grabbing" }}
       >
         {[...logos, ...logos].map((logo, i) => (
@@ -87,6 +78,7 @@ export default function Carrusel() {
               width={160}
               height={80}
               priority={i < 5}
+              loading={i >= 5 ? "lazy" : "eager"}
               className="carrusel-img"
             />
           </div>
@@ -95,15 +87,10 @@ export default function Carrusel() {
 
       {/* Flecha derecha */}
       {!isMobile && (
-        <button
-          className="carrusel-button right"
-          onClick={() => handleSpeedChange(5)}
-          aria-label="Siguiente"
-        >
+        <button className="carrusel-button right" aria-label="Siguiente">
           <ChevronRight size={30} />
         </button>
       )}
     </div>
   );
 }
-

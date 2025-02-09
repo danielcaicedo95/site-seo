@@ -9,13 +9,13 @@ const Reseñas = () => {
   const [nombre, setNombre] = useState("");
   const [comentario, setComentario] = useState("");
   const [foto, setFoto] = useState<string | null>(null);
-  const [estrellas, setEstrellas] = useState(0);
-  const [reseña, setReseña] = useState<any | null>(null);
+  const [estrellas, setEstrellas] = useState<number>(0);
+  const [reseña, setReseña] = useState<{ nombre: string; comentario: string; estrellas: number; foto: string | null } | null>(null);
 
   useEffect(() => {
-    const storedReseña = JSON.parse(localStorage.getItem("reseña") || "null");
+    const storedReseña = localStorage.getItem("reseña");
     if (storedReseña) {
-      setReseña(storedReseña);
+      setReseña(JSON.parse(storedReseña));
       setReseñaGuardada(true);
     }
   }, []);

@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { motion } from "framer-motion";
+import "../styles/components/contactform.module.css"; // Archivo CSS para los estilos personalizados
 
 interface FormData {
   nombre: string;
@@ -18,12 +21,21 @@ export default function Contacto() {
     mensaje: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handlePhoneChange = (value: string | undefined) => {
+    setFormData({ ...formData, telefono: value || "" });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
 
     try {
       const response = await fetch("/api/contact", {
@@ -34,10 +46,8 @@ export default function Contacto() {
         body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
-
       if (response.ok) {
-        alert("Mensaje enviado con éxito");
+        setSubmitStatus("success");
         setFormData({
           nombre: "",
           telefono: "",
@@ -45,10 +55,12 @@ export default function Contacto() {
           mensaje: "",
         });
       } else {
-        alert("Error al enviar el mensaje: " + result.message);
+        setSubmitStatus("error");
       }
     } catch (error) {
-      alert("Error al enviar el mensaje");
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -57,78 +69,122 @@ export default function Contacto() {
       className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 to-blue-900 p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 0.5 }}
     >
+      {/* Datos estructurados para SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "Formulario de Contacto",
+            description: "Formulario para contactar con Daniel Caicedo.",
+          }),
+        }}
+      />
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl w-full bg-gray-800 bg-opacity-75 rounded-lg shadow-2xl p-8">
-        {/* Columna izquierda: Mensaje llamativo */}
         <motion.div
           className="flex flex-col justify-center text-white"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h2 className="text-4xl font-bold mb-4">¡Hablemos!</h2>
+          <h1 className="text-4xl font-bold mb-4">¡Hablemos!</h1>
           <p className="text-lg">
             Si tienes alguna pregunta o simplemente quieres ponerte en contacto, no dudes en enviarme un mensaje. Estaré encantado de ayudarte.
           </p>
         </motion.div>
 
-        {/* Columna derecha: Formulario */}
         <motion.form
           onSubmit={handleSubmit}
           className="flex flex-col gap-6"
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <input
-            type="text"
-            name="nombre"
-            placeholder="Nombre completo"
-            value={formData.nombre}
-            onChange={handleChange}
-            className="p-3 rounded bg-gray-700 text-white border border-gray-600 focus:border-purple-500 focus:outline-none"
-            required
-          />
+          <div>
+            <label htmlFor="nombre" className="sr-only">
+              Nombre completo
+            </label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              placeholder="Nombre completo"
+              value={formData.nombre}
+              onChange={handleChange}
+              className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:border-purple-500 focus:outline-none"
+              required
+            />
+          </div>
 
-          <PhoneInput
-            country={"us"}
-            value={formData.telefono}
-            onChange={(value) => setFormData({ ...formData, telefono: value })}
-            inputClass="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:border-purple-500 focus:outline-none"
-            inputProps={{
-              required: true,
-            }}
-          />
+          <div>
+            <label htmlFor="telefono" className="sr-only">
+              Teléfono
+            </label>
+            <PhoneInput
+              country="US"
+              value={formData.telefono}
+              onChange={handlePhoneChange}
+              inputComponent={(props: any) => (
+                <input
+                  {...props}
+                  className="w-full p-3 rounded bg-white text-black border border-gray-600 focus:border-purple-500 focus:outline-none"
+                />
+              )}
+            />
+          </div>
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Correo electrónico"
-            value={formData.email}
-            onChange={handleChange}
-            className="p-3 rounded bg-gray-700 text-white border border-gray-600 focus:border-purple-500 focus:outline-none"
-            required
-          />
+          <div>
+            <label htmlFor="email" className="sr-only">
+              Correo electrónico
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Correo electrónico"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:border-purple-500 focus:outline-none"
+              required
+            />
+          </div>
 
-          <textarea
-            name="mensaje"
-            placeholder="Mensaje"
-            value={formData.mensaje}
-            onChange={handleChange}
-            className="p-3 rounded bg-gray-700 text-white border border-gray-600 focus:border-purple-500 focus:outline-none"
-            rows={5}
-            required
-          />
+          <div>
+            <label htmlFor="mensaje" className="sr-only">
+              Mensaje
+            </label>
+            <textarea
+              id="mensaje"
+              name="mensaje"
+              placeholder="Mensaje"
+              value={formData.mensaje}
+              onChange={handleChange}
+              className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:border-purple-500 focus:outline-none"
+              rows={5}
+              required
+            />
+          </div>
 
           <motion.button
             type="submit"
-            className="p-3 bg-purple-600 rounded text-white font-bold hover:bg-purple-700 transition-all transform hover:scale-105"
+            className="p-3 bg-purple-600 rounded text-white font-bold hover:bg-purple-700 transition-all"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            disabled={isSubmitting}
           >
-            Enviar mensaje
+            {isSubmitting ? "Enviando..." : "Enviar mensaje"}
           </motion.button>
+
+          {submitStatus === "success" && (
+            <p className="text-green-400 text-center">Mensaje enviado con éxito.</p>
+          )}
+          {submitStatus === "error" && (
+            <p className="text-red-400 text-center">Error al enviar el mensaje. Inténtalo de nuevo.</p>
+          )}
         </motion.form>
       </div>
     </motion.div>
