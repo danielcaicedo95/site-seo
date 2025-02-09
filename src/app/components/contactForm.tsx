@@ -57,8 +57,6 @@ export default function Contacto() {
       } else {
         setSubmitStatus("error");
       }
-    } catch (error) {
-      setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -128,7 +126,7 @@ export default function Contacto() {
               country="US"
               value={formData.telefono}
               onChange={handlePhoneChange}
-              inputComponent={(props: any) => (
+              inputComponent={(props: React.InputHTMLAttributes<HTMLInputElement>) => (
                 <input
                   {...props}
                   className="w-full p-3 rounded bg-white text-black border border-gray-600 focus:border-purple-500 focus:outline-none"

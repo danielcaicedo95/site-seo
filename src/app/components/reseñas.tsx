@@ -119,7 +119,7 @@ const Reseñas = () => {
                 <FaStar key={i} className="text-yellow-400" />
               ))}
             </div>
-            <p className="italic text-gray-700">"{reseña.comentario}"</p>
+            <p className="italic text-gray-700">“{reseña.comentario}”</p>
           </div>
         </div>
       )}

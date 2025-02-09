@@ -22,16 +22,13 @@ const logos = [
 ];
 
 export default function Carrusel() {
-  const [itemsToShow, setItemsToShow] = useState(5);
   const [isMobile, setIsMobile] = useState(false);
   const controls = useAnimation();
   const containerRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
-      const isMobileView = window.innerWidth < 768;
-      setIsMobile(isMobileView);
-      setItemsToShow(isMobileView ? 3 : 5);
+      setIsMobile(window.innerWidth < 768);
     };
 
     handleResize();
@@ -43,7 +40,8 @@ export default function Carrusel() {
     let animationFrame: number;
 
     const animateScroll = () => {
-      controls.start({ x: "-100%", transition: { duration: 15, ease: "linear" } })
+      controls
+        .start({ x: "-100%", transition: { duration: 15, ease: "linear" } })
         .then(() => controls.set({ x: "0%" }))
         .then(() => {
           animationFrame = requestAnimationFrame(animateScroll);
@@ -64,12 +62,7 @@ export default function Carrusel() {
       )}
 
       {/* Contenedor del carrusel */}
-      <motion.div
-        ref={containerRef}
-        className="carrusel-track"
-        animate={controls}
-        whileTap={{ cursor: "grabbing" }}
-      >
+      <motion.div ref={containerRef} className="carrusel-track" animate={controls}>
         {[...logos, ...logos].map((logo, i) => (
           <div key={i} className="carrusel-item">
             <Image
@@ -77,8 +70,8 @@ export default function Carrusel() {
               alt={`Logo ${i + 1}`}
               width={160}
               height={80}
-              priority={i < 5}
-              loading={i >= 5 ? "lazy" : "eager"}
+              priority={i < 3} // Prioridad para las primeras imágenes
+              loading={i >= 3 ? "lazy" : "eager"}
               className="carrusel-img"
             />
           </div>
