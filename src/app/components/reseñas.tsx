@@ -24,7 +24,10 @@ const Reseñas = () => {
   useEffect(() => {
     const fetchReseñas = async () => {
       const querySnapshot = await getDocs(collection(db, "reseñas"));
-      const reseñasData = querySnapshot.docs.map((doc) => doc.data() as Reseña);
+      const reseñasData = querySnapshot.docs.map((doc) => {
+        const data = doc.data() as Reseña; // Especifica el tipo aquí
+        return data;
+      });
       setReseñas(reseñasData);
     };
 
@@ -33,7 +36,7 @@ const Reseñas = () => {
 
   const handleGuardarReseña = useCallback(async (nuevaReseña: Reseña) => {
     try {
-      await addDoc(collection(db, "reseñas"), nuevaReseña);
+      await addDoc(collection(db, "resenas"), nuevaReseña);
       setReseña(nuevaReseña);
       setReseñaGuardada(true);
       setReseñas((prevReseñas) => [...prevReseñas, nuevaReseña]);
