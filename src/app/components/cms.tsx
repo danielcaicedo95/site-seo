@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import "../styles/components/cms.css";  
+
 interface CmsItem {
   key: string;
   name: string;
@@ -57,47 +57,51 @@ const Cms = () => {
   }, [activeItems]);
 
   return (
-    <section className="cms" itemScope itemType="https://schema.org/SoftwareApplication">
-      <h2 className="text-3xl font-bold text-black" itemProp="name">
+    <section
+      className="cms p-8 text-center bg-gray-900 text-white"
+      itemScope
+      itemType="https://schema.org/SoftwareApplication"
+    >
+      <h2 className="text-3xl font-bold text-[#00ffcc] mb-4" itemProp="name">
         Expertos en los CMS más populares
       </h2>
-      <p itemProp="description" className="text-gray-900">
+      <p itemProp="description" className="text-gray-300 mb-8">
         Hemos trabajado con las plataformas más utilizadas en el mundo. Nos adaptamos a cualquier CMS.
       </p>
 
-      <div className="cms-grid grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div className="cms-grid grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
         {cmsData.map((cms, index) => (
           <motion.div
             key={cms.key}
             ref={(el) => setCmsRef(el, index)}
             itemScope
             itemType="https://schema.org/SoftwareApplication"
-            className={`cms-item rounded-xl p-4 shadow-lg transition-all ${
-              activeItems.has(cms.key) ? "bg-gray-800 scale-105" : "bg-gray-700"
-            }`}
+            className="cms-item bg-gradient-to-br from-[#1b1b2f] to-[#162447] rounded-lg p-4 text-center transition-transform duration-300 hover:scale-105"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
+            whileHover={{ scale: 1.05 }} // Efecto hover en desktop
+            whileTap={{ scale: 0.95 }} // Efecto tap en móviles
           >
-            <Image 
-              src={cms.image} 
-              alt={cms.name} 
-              width={100} 
-              height={100} 
-              itemProp="image" 
-              loading="lazy" 
-              className="w-auto h-auto"
+            <Image
+              src={cms.image}
+              alt={cms.name}
+              width={80}
+              height={80}
+              itemProp="image"
+              loading="lazy"
+              className="mx-auto filter drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]"
             />
-            <div className="cms-info mt-2">
+            <div className="cms-info mt-4">
               <h3 itemProp="name" className="text-xl font-bold text-[#00ffcc]">
                 {cms.name}
               </h3>
-              <p itemProp="description" className="text-sm text-[#cccccc]">
+              <p itemProp="description" className="text-sm text-gray-300 mt-2">
                 {cms.description}
               </p>
               <motion.a
                 href="#"
-                className="ver-mas text-blue-400 underline"
+                className="ver-mas inline-block mt-3 text-blue-400 underline font-bold"
                 whileHover={{ scale: 1.1 }}
                 aria-label={`Más información sobre ${cms.name}`}
               >
@@ -108,7 +112,7 @@ const Cms = () => {
         ))}
       </div>
 
-      <p className="cms-adaptamos mt-4 text-center text-gray-900">
+      <p className="cms-adaptamos mt-8 text-center text-gray-300">
         Nos adaptamos a cualquier CMS. ¡Tu proyecto en las mejores manos!
       </p>
     </section>
