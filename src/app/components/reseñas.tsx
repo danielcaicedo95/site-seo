@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { FaCheckCircle, FaStar } from "react-icons/fa";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { db, collection, addDoc, getDocs } from "../../pages/api/firebase";
 
 // Carga diferida del componente de reseñas
 const ReseñaForm = dynamic(() => import("./ReseñaForm"), { ssr: false });
@@ -18,19 +19,27 @@ interface Reseña {
 const Reseñas = () => {
   const [reseñaGuardada, setReseñaGuardada] = useState(false);
   const [reseña, setReseña] = useState<Reseña | null>(null);
+  const [reseñas, setReseñas] = useState<Reseña[]>([]);
 
   useEffect(() => {
-    const storedReseña = localStorage.getItem("reseña");
-    if (storedReseña) {
-      setReseña(JSON.parse(storedReseña));
-      setReseñaGuardada(true);
-    }
+    const fetchReseñas = async () => {
+      const querySnapshot = await getDocs(collection(db, "reseñas"));
+      const reseñasData = querySnapshot.docs.map((doc) => doc.data() as Reseña);
+      setReseñas(reseñasData);
+    };
+
+    fetchReseñas();
   }, []);
 
-  const handleGuardarReseña = useCallback((nuevaReseña: Reseña) => {
-    setReseña(nuevaReseña);
-    setReseñaGuardada(true);
-    localStorage.setItem("reseña", JSON.stringify(nuevaReseña));
+  const handleGuardarReseña = useCallback(async (nuevaReseña: Reseña) => {
+    try {
+      await addDoc(collection(db, "reseñas"), nuevaReseña);
+      setReseña(nuevaReseña);
+      setReseñaGuardada(true);
+      setReseñas((prevReseñas) => [...prevReseñas, nuevaReseña]);
+    } catch (error) {
+      console.error("Error guardando la reseña: ", error);
+    }
   }, []);
 
   return (
@@ -47,10 +56,10 @@ const Reseñas = () => {
       )}
 
       {/* Lista de reseñas */}
-      {reseña && (
-        <div className="mt-8">
-          <h3 className="text-xl font-semibold mb-4 text-gray-300">Tu reseña</h3>
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg text-center max-w-md mx-auto border border-gray-700">
+      <div className="mt-8">
+        <h3 className="text-xl font-semibold mb-4 text-gray-300">Reseñas</h3>
+        {reseñas.map((reseña, index) => (
+          <div key={index} className="bg-gray-800 p-6 rounded-lg shadow-lg text-center max-w-md mx-auto border border-gray-700 mb-4">
             {reseña.foto && (
               <Image
                 src={reseña.foto}
@@ -69,8 +78,8 @@ const Reseñas = () => {
             </div>
             <p className="italic text-gray-300">“{reseña.comentario}”</p>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
 
       {/* Datos estructurados para SEO */}
       <script
