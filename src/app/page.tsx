@@ -1,5 +1,6 @@
 
 import "./styles/global.css";
+
 import { Metadata } from 'next';
 
 import Navbar from "@/app/components/navbar";
