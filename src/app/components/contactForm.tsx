@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import PhoneInput from "react-phone-number-input";
-import "react-phone-number-input/style.css";
+import React, { useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-import "../styles/components/contactform.module.css"; // Archivo CSS para los estilos personalizados
+import "react-phone-number-input/style.css";
+
+const PhoneInput = lazy(() => import("react-phone-number-input"));
 
 interface FormData {
   nombre: string;
@@ -122,17 +122,15 @@ export default function Contacto() {
             <label htmlFor="telefono" className="sr-only">
               Teléfono
             </label>
-            <PhoneInput
-              country="US"
-              value={formData.telefono}
-              onChange={handlePhoneChange}
-              inputComponent={(props: React.InputHTMLAttributes<HTMLInputElement>) => (
-                <input
-                  {...props}
-                  className="w-full p-3 rounded bg-white text-black border border-gray-600 focus:border-purple-500 focus:outline-none"
-                />
-              )}
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              <PhoneInput
+                international
+                defaultCountry="US"
+                value={formData.telefono}
+                onChange={handlePhoneChange}
+                className="w-full p-3 rounded bg-white text-black border border-gray-600 focus:border-purple-500 focus:outline-none"
+              />
+            </Suspense>
           </div>
 
           <div>
