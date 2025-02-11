@@ -8,9 +8,16 @@ import dynamic from "next/dynamic";
 // Carga diferida del componente de reseñas
 const ReseñaForm = dynamic(() => import("./ReseñaForm"), { ssr: false });
 
+interface Reseña {
+  nombre: string;
+  comentario: string;
+  estrellas: number;
+  foto: string | null;
+}
+
 const Reseñas = () => {
   const [reseñaGuardada, setReseñaGuardada] = useState(false);
-  const [reseña, setReseña] = useState<{ nombre: string; comentario: string; estrellas: number; foto: string | null } | null>(null);
+  const [reseña, setReseña] = useState<Reseña | null>(null);
 
   useEffect(() => {
     const storedReseña = localStorage.getItem("reseña");
@@ -20,7 +27,7 @@ const Reseñas = () => {
     }
   }, []);
 
-  const handleGuardarReseña = useCallback((nuevaReseña: any) => {
+  const handleGuardarReseña = useCallback((nuevaReseña: Reseña) => {
     setReseña(nuevaReseña);
     setReseñaGuardada(true);
     localStorage.setItem("reseña", JSON.stringify(nuevaReseña));
