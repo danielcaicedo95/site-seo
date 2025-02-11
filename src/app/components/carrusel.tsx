@@ -24,7 +24,7 @@ const logos = [
 export default function Carrusel() {
   const [isMobile, setIsMobile] = useState(false);
   const controls = useAnimation();
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,18 +37,20 @@ export default function Carrusel() {
   }, []);
 
   useEffect(() => {
+    if (!containerRef.current) return;
+
     let animationFrame: number;
 
     const animateScroll = () => {
-      controls
-        .start({ x: "-100%", transition: { duration: 15, ease: "linear" } })
+      controls.start({ x: "-100%", transition: { duration: 15, ease: "linear" } })
         .then(() => controls.set({ x: "0%" }))
         .then(() => {
           animationFrame = requestAnimationFrame(animateScroll);
         });
     };
 
-    animateScroll();
+    requestAnimationFrame(animateScroll);
+
     return () => cancelAnimationFrame(animationFrame);
   }, [controls]);
 

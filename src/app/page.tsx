@@ -1,6 +1,7 @@
-"use client";
 
 import "./styles/global.css";
+import { Metadata } from 'next';
+
 import Navbar from "@/app/components/navbar";
 import Portada from "@/app/components/portada";
 import Carrusel from "@/app/components/carrusel";
@@ -10,6 +11,7 @@ import Cms from "@/app/components/cms";
 import Logros from "@/app/components/logros";
 import Reseñas from "@/app/components/reseñas"; 
 import Footer from "@/app/components/footer"; 
+import Contacto from "./components/contactForm";
 
 // 🔹 Definir la interfaz aquí directamente para evitar errores
 interface Servicio {
@@ -20,17 +22,26 @@ interface Servicio {
   posicionImagen: "left" | "right";
 }
 
+export const metadata: Metadata = {
+  title: 'Consultor SEO - Técnico, On Page, Off Page e IA | Daniel C', // Título específico
+  description: 'Especialista SEO en Colombia con más de 6 años de experiencia usando diferentes CMS, como WordPress, Magento, Shopify y Drupal. Experto en SEO para eCommerce y aumento de tráfico orgánico. Haz clic para conocerme.', // Descripción específica
+  keywords: ['inicio', 'Next.js', 'SEO'], // Palabras clave específicas
+  alternates: {
+    canonical: 'https://home.com', // URL canónica específica
+  },
+};
+
 const Home: React.FC = () => {
   const portadaData = {
     imagen: "/images/portada1.jpg",
-    titulo: "Bienvenidos a Nuestro Servicio SEO",
-    descripcion: "Ofrecemos soluciones personalizadas de SEO para mejorar la visibilidad de tu sitio web.",
+    titulo: "Experto en SEO, Estrategias SGI, Soluciones IA y Crecimiento Digital",
+    descripcion: "¿Sabías que el 93% de las experiencias en línea comienzan con un motor de búsqueda?",
   };
 
   const presentacionData = {
-    imageSrc: "/images/logo-presentacion.png",
-    title: "¿Por qué elegirnos?",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget nulla ut odio faucibus interdum. Curabitur tristique libero vel metus tincidunt fringilla. Proin euismod consectetur mi at gravida. Suspendisse potenti. Fusce sit amet lacus eget justo venenatis pellentesque vel sit amet nisi.",
+    imageSrc: "/images/foto.png",
+    title: "Estrategias SEO Profesionales. Enfoque en Usuarios y Mejores Prácticas EEAT",
+    text: "Soy Daniel Caicedo, experto en SEO con más de 6 años de experiencia ayudando a negocios a posicionarse en motores de búsqueda. Mi enfoque combina tácticas actualizadas a los nuevos algoritmos con las mejores prácticas de EEAT (Experiencia, Conocimiento, Autoridad y Confianza), resolviendo las intenciones de búsqueda de los usuarios para generar resultados sostenibles.",
   };
 
   const serviciosData: Servicio[] = [
@@ -77,6 +88,8 @@ const Home: React.FC = () => {
       <Cms />
       <Logros />
       <Reseñas />
+      <Contacto/>
+      
       <Footer />
     </div>
   );
