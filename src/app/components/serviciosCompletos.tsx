@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 
 const servicios = [
-
   {
     titulo: "SEO On Page",
     descripcion: "Optimizamos el contenido y la estructura interna de tu sitio para mejorar su relevancia.",
@@ -120,16 +119,15 @@ const ServiciosCompletos = () => {
 
   return (
     <section className="container mx-auto px-4 py-10">
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {servicios.map((servicio, index) => (
           <motion.div
             key={index}
             className="relative bg-gray-900 shadow-lg rounded-lg p-6 border border-gray-700 transition-all hover:shadow-xl"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.1 }}
           >
             <h3 className="text-2xl font-semibold text-[#00ffcc] mb-3">
               {servicio.titulo}

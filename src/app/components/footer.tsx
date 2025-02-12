@@ -14,12 +14,12 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-white py-12 relative overflow-hidden">
-      {/* 🔹 Fondo con efecto futurista */}
+      {/* 🔹 Fondo con efecto futurista (optimizado) */}
       <div className="absolute inset-0 opacity-20">
-        <div className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 blur-3xl"></div>
+        <div className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 blur-md md:blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8 relative z-10">
+      <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-5 gap-8 relative z-10">
         {/* 🔹 Logo + Información SEO */}
         <motion.div
           className="md:col-span-1"
@@ -33,6 +33,7 @@ const Footer = () => {
             width={160}
             height={50}
             priority
+            className="w-40 h-auto"
           />
           <h2 className="text-lg font-bold tracking-wider mt-3">
             Tu Agencia SEO
@@ -53,11 +54,12 @@ const Footer = () => {
             ],
           },
           {
-            title: "Eventos",
+            title: "SEO por Ciudades",
             links: [
-              { name: "Black Friday 2025", url: "/black-friday-2025" },
-              { name: "Cyber Monday 2025", url: "/cyber-monday-2025" },
-              { name: "SEO Trends 2025", url: "/seo-trends-2025" },
+              { name: "SEO Cali", url: "/seo-cali" },
+              { name: "SEO Bogotá", url: "/seo-bogota" },
+              { name: "SEO Medellín", url: "/seo-medellin" },
+              { name: "SEO Pasto", url: "/seo-pasto" },
             ],
           },
           {
@@ -74,7 +76,8 @@ const Footer = () => {
             title: "Navegación",
             links: [
               { name: "Inicio", url: "/" },
-              { name: "Sobre Nosotros", url: "/sobre-nosotros" },
+              { name: "Servicios", url: "/servicios" },
+              { name: "Sobre Mi", url: "/sobre-mi" },
               { name: "Blog", url: "/blog" },
               { name: "Contacto", url: "/contacto" },
             ],
@@ -82,6 +85,7 @@ const Footer = () => {
         ].map((section, index) => (
           <motion.div
             key={index}
+            className="text-left"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 * (index + 1) }}
@@ -113,11 +117,11 @@ const Footer = () => {
         </motion.button>
       </div>
 
-      {/* 🔹 Formulario emergente */}
+      {/* 🔹 Formulario emergente (lazy load) */}
       {mostrarFormulario && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md z-50">
           <motion.div
-            className="bg-gray-800 p-6 rounded-lg shadow-lg w-96 text-white"
+            className="bg-gray-800 p-6 rounded-lg shadow-lg w-11/12 md:w-96 text-white"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.3 }}
@@ -173,4 +177,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

@@ -37,7 +37,7 @@ const Navbar = () => {
         <ul className={`${styles.navbarMenu} ${menuOpen ? styles.active : ""}`}>
           <li><Link href="/">Inicio</Link></li>
           <li><Link href="/servicios">Servicios</Link></li>
-          <li><Link href="/acerca-de">Acerca de</Link></li>
+          <li><Link href="/sobre-mi">Sobre mi</Link></li>
           <li><Link href="/contacto">Contacto</Link></li>
           <li><Link href="/blog">Blog</Link></li>
           {/* Botón de cierre */}

@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-
 interface Logro {
   key: string;
   image: string;
@@ -58,8 +57,8 @@ const logros: Logro[] = [
 
 const Logros = () => {
   return (
-    <section className="logros px-6 py-12 bg-gray-100" itemScope itemType="https://schema.org/CreativeWork">
-      <h2 className="text-4xl font-bold text-center text-gray-900 mb-8" itemProp="name">
+    <section className="logros px-6 py-12 bg-gray-900" itemScope itemType="https://schema.org/CreativeWork">
+      <h2 className="text-4xl font-bold text-center text-purple-400 mb-8" itemProp="name">
         Experiencia demostrada en resultados
       </h2>
       
@@ -67,10 +66,10 @@ const Logros = () => {
         {logros.map((logro, index) => (
           <motion.div
             key={logro.key}
-            className="relative group rounded-lg overflow-hidden shadow-lg bg-white"
+            className="relative group rounded-lg overflow-hidden shadow-lg bg-gray-800 hover:shadow-xl transition duration-300"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
             itemScope
             itemType="https://schema.org/CreativeWork"
           >
@@ -81,11 +80,18 @@ const Logros = () => {
               height={300}
               className="w-full h-56 object-cover group-hover:brightness-75 transition duration-300"
               itemProp="image"
+              priority={index < 3} // Prioriza las primeras imágenes para mejorar el LCP
             />
             
+            {/* Información visible en móvil y desktop */}
             <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 p-4">
               <h3 className="text-lg font-bold text-white" itemProp="headline">{logro.title}</h3>
               <p className="text-sm text-gray-200" itemProp="description">{logro.description}</p>
+            </div>
+
+            {/* Indicador visual para móviles */}
+            <div className="md:hidden absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-100 group-hover:opacity-0 transition duration-300">
+              <span className="text-white text-sm font-semibold">Toca para ver más</span>
             </div>
           </motion.div>
         ))}
