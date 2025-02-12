@@ -67,7 +67,7 @@ export default function Contacto() {
       className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 to-blue-900 p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3 }}
     >
       {/* Datos estructurados para SEO */}
       <script
@@ -85,9 +85,9 @@ export default function Contacto() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl w-full bg-gray-800 bg-opacity-75 rounded-lg shadow-2xl p-8">
         <motion.div
           className="flex flex-col justify-center text-white"
-          initial={{ x: -100, opacity: 0 }}
+          initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
         >
           <h1 className="text-4xl font-bold mb-4">¡Hablemos!</h1>
           <p className="text-lg">
@@ -98,9 +98,9 @@ export default function Contacto() {
         <motion.form
           onSubmit={handleSubmit}
           className="flex flex-col gap-6"
-          initial={{ x: 100, opacity: 0 }}
+          initial={{ x: 50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
         >
           <div>
             <label htmlFor="nombre" className="sr-only">
@@ -122,7 +122,7 @@ export default function Contacto() {
             <label htmlFor="telefono" className="sr-only">
               Teléfono
             </label>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600">Loading...</div>}>
               <PhoneInput
                 international
                 defaultCountry="US"
