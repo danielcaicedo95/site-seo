@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import "../styles/components/carrusel.css";
 
 const logos = [
@@ -26,6 +25,7 @@ export default function Carrusel() {
   const controls = useAnimation();
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Detectar si es móvil
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -36,33 +36,30 @@ export default function Carrusel() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Animación del carrusel
   useEffect(() => {
     if (!containerRef.current) return;
 
-    let animationFrame: number;
-
-    const animateScroll = () => {
-      controls.start({ x: "-100%", transition: { duration: 15, ease: "linear" } })
-        .then(() => controls.set({ x: "0%" }))
-        .then(() => {
-          animationFrame = requestAnimationFrame(animateScroll);
-        });
+    const animateScroll = async () => {
+      await controls.start({
+        x: "-100%",
+        transition: { duration: 15, ease: "linear" },
+      });
+      controls.set({ x: "0%" }); // Reinicia la posición
+      animateScroll(); // Repite la animación
     };
 
-    requestAnimationFrame(animateScroll);
+    // Iniciar la animación solo si el componente está montado
+    const timeout = setTimeout(() => {
+      animateScroll();
+    }, 100); // Pequeño retraso para asegurar que el componente esté montado
 
-    return () => cancelAnimationFrame(animationFrame);
+    // Limpiar la animación al desmontar el componente
+    return () => clearTimeout(timeout);
   }, [controls]);
 
   return (
     <div className="carrusel-container">
-      {/* Flecha izquierda */}
-      {!isMobile && (
-        <button className="carrusel-button left" aria-label="Anterior">
-          <ChevronLeft size={30} />
-        </button>
-      )}
-
       {/* Contenedor del carrusel */}
       <motion.div ref={containerRef} className="carrusel-track" animate={controls}>
         {[...logos, ...logos].map((logo, i) => (
@@ -79,13 +76,6 @@ export default function Carrusel() {
           </div>
         ))}
       </motion.div>
-
-      {/* Flecha derecha */}
-      {!isMobile && (
-        <button className="carrusel-button right" aria-label="Siguiente">
-          <ChevronRight size={30} />
-        </button>
-      )}
     </div>
   );
 }

@@ -68,8 +68,8 @@ const BeneficiosSEO = () => {
           }`}
           initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.1 }}
         >
           {/* Imagen */}
           <div className={styles.imagenContainer}>

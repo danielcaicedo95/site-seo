@@ -1,118 +1,180 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { FaCheckCircle, FaStar } from "react-icons/fa";
+import { useState, useEffect, useRef } from "react";
+import { FaStar } from "react-icons/fa";
 import Image from "next/image";
-import dynamic from "next/dynamic";
-import { db, collection, addDoc, getDocs } from "../../pages/api/firebase";
 
-// Carga diferida del componente de reseñas
-const ReseñaForm = dynamic(() => import("./ReseñaForm"), { ssr: false });
-
-interface Reseña {
-  nombre: string;
-  comentario: string;
-  estrellas: number;
-  foto: string | null;
-}
+// Datos de las 12 reseñas predefinidas
+const reseñas = [
+  {
+    nombre: "Ana López",
+    foto: "/user1.jpg", // Cambia por la ruta de tus imágenes
+    estrellas: 5,
+    comentario: "¡Increíble servicio! Mi marca personal despegó gracias a su ayuda.",
+    correo: "ana.lopez@example.com",
+  },
+  {
+    nombre: "Carlos Ruiz",
+    foto: "/user2.jpg",
+    estrellas: 5,
+    comentario: "Profesionales de primer nivel. ¡Los recomiendo totalmente!",
+    correo: "carlos.ruiz@example.com",
+  },
+  {
+    nombre: "María Gómez",
+    foto: "/user3.jpg",
+    estrellas: 4,
+    comentario: "Muy contenta con los resultados. ¡Gracias por todo!",
+    correo: "maria.gomez@example.com",
+  },
+  {
+    nombre: "Javier Torres",
+    foto: "/user4.jpg",
+    estrellas: 5,
+    comentario: "Transformaron mi presencia en línea. ¡Excelente trabajo!",
+    correo: "javier.torres@example.com",
+  },
+  {
+    nombre: "Lucía Méndez",
+    foto: "/user5.jpg",
+    estrellas: 5,
+    comentario: "Superaron mis expectativas. ¡Los mejores en lo que hacen!",
+    correo: "lucia.mendez@example.com",
+  },
+  {
+    nombre: "Pedro Sánchez",
+    foto: "/user6.jpg",
+    estrellas: 4,
+    comentario: "Muy profesionales y atentos a los detalles. ¡Gracias!",
+    correo: "pedro.sanchez@example.com",
+  },
+  {
+    nombre: "Sofía Ramírez",
+    foto: "/user7.jpg",
+    estrellas: 5,
+    comentario: "Mi marca personal nunca había lucido tan bien. ¡Increíble!",
+    correo: "sofia.ramirez@example.com",
+  },
+  {
+    nombre: "Diego Castro",
+    foto: "/user8.jpg",
+    estrellas: 5,
+    comentario: "El mejor equipo para potenciar tu marca. ¡Los recomiendo!",
+    correo: "diego.castro@example.com",
+  },
+  {
+    nombre: "Elena Vargas",
+    foto: "/user9.jpg",
+    estrellas: 4,
+    comentario: "Muy satisfecha con su trabajo. ¡Gracias por todo!",
+    correo: "elena.vargas@example.com",
+  },
+  {
+    nombre: "Miguel Ángel",
+    foto: "/user10.jpg",
+    estrellas: 5,
+    comentario: "¡Increíble experiencia! Mi marca personal brilla ahora más que nunca.",
+    correo: "miguel.angel@example.com",
+  },
+  {
+    nombre: "Laura Fernández",
+    foto: "/user11.jpg",
+    estrellas: 5,
+    comentario: "Excelente atención y resultados. ¡Totalmente recomendados!",
+    correo: "laura.fernandez@example.com",
+  },
+  {
+    nombre: "Roberto Navarro",
+    foto: "/user12.jpg",
+    estrellas: 4,
+    comentario: "Muy contento con el servicio. ¡Gracias por su profesionalismo!",
+    correo: "roberto.navarro@example.com",
+  },
+];
 
 const Reseñas = () => {
-  const [reseñaGuardada, setReseñaGuardada] = useState(false);
-  const [reseña, setReseña] = useState<Reseña | null>(null);
-  const [reseñas, setReseñas] = useState<Reseña[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
+  // Detecta si es móvil
   useEffect(() => {
-    const fetchReseñas = async () => {
-      const querySnapshot = await getDocs(collection(db, "reseñas"));
-      const reseñasData = querySnapshot.docs.map((doc) => {
-        const data = doc.data() as Reseña; // Especifica el tipo aquí
-        return data;
-      });
-      setReseñas(reseñasData);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
     };
-
-    fetchReseñas();
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleGuardarReseña = useCallback(async (nuevaReseña: Reseña) => {
-    try {
-      await addDoc(collection(db, "resenas"), nuevaReseña);
-      setReseña(nuevaReseña);
-      setReseñaGuardada(true);
-      setReseñas((prevReseñas) => [...prevReseñas, nuevaReseña]);
-    } catch (error) {
-      console.error("Error guardando la reseña: ", error);
+  // Auto-scroll en móvil
+  useEffect(() => {
+    if (isMobile && containerRef.current) {
+      const interval = setInterval(() => {
+        if (containerRef.current) {
+          containerRef.current.scrollBy({ left: 300, behavior: "smooth" });
+          if (
+            containerRef.current.scrollLeft + containerRef.current.clientWidth >=
+            containerRef.current.scrollWidth
+          ) {
+            containerRef.current.scrollTo({ left: 0, behavior: "smooth" });
+          }
+        }
+      }, 5000); // Cambia cada 5 segundos
+      return () => clearInterval(interval);
     }
-  }, []);
+  }, [isMobile]);
+
+  // Reseñas a mostrar (6 en desktop, todas si se hace clic en "Ver más")
+  const reseñasMostradas = showAll ? reseñas : reseñas.slice(0, 6);
 
   return (
-    <section className="reseñas py-10 px-5 text-center bg-gradient-to-br from-gray-900 to-gray-800">
-      <h2 className="text-3xl font-bold mb-6 text-[#00ffcc]">Reseñas de Nuestros Clientes</h2>
-
-      {!reseñaGuardada ? (
-        <ReseñaForm onGuardarReseña={handleGuardarReseña} />
-      ) : (
-        <div className="mt-6 flex flex-col items-center">
-          <FaCheckCircle className="text-green-500 text-5xl mb-2" />
-          <p className="text-lg font-semibold text-gray-300">¡Gracias por tu reseña!</p>
-        </div>
-      )}
-
-      {/* Lista de reseñas */}
-      <div className="mt-8">
-        <h3 className="text-xl font-semibold mb-4 text-gray-300">Reseñas</h3>
-        {reseñas.map((reseña, index) => (
-          <div key={index} className="bg-gray-800 p-6 rounded-lg shadow-lg text-center max-w-md mx-auto border border-gray-700 mb-4">
-            {reseña.foto && (
+    <section className="py-12 px-4 bg-gradient-to-br from-purple-900 to-blue-900">
+      <h2 className="text-4xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+        Reseñas de Clientes
+      </h2>
+      <div
+        ref={containerRef}
+        className={`grid ${isMobile ? "grid-flow-col auto-cols-[80%] gap-4 overflow-x-auto snap-x snap-mandatory" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"}`}
+      >
+        {reseñasMostradas.map((reseña, index) => (
+          <div
+            key={index}
+            className="bg-gradient-to-br from-purple-800 to-blue-800 p-6 rounded-lg shadow-2xl transform transition-transform duration-500 hover:scale-105 snap-center"
+          >
+            <div className="flex items-center space-x-4 mb-4">
               <Image
                 src={reseña.foto}
-                alt="Usuario"
-                width={80}
-                height={80}
-                className="rounded-full mx-auto mb-3 border-4 border-[#00ffcc]"
+                alt={reseña.nombre}
+                width={64}
+                height={64}
+                className="rounded-full border-2 border-purple-400"
                 loading="lazy"
               />
-            )}
-            <h3 className="font-semibold text-lg text-[#00ffcc]">{reseña.nombre}</h3>
-            <div className="flex justify-center my-2">
-              {[...Array(reseña.estrellas)].map((_, i) => (
-                <FaStar key={i} className="text-yellow-400" />
-              ))}
+              <div>
+                <h3 className="text-xl font-semibold text-white">{reseña.nombre}</h3>
+                <div className="flex space-x-1">
+                  {[...Array(reseña.estrellas)].map((_, i) => (
+                    <FaStar key={i} className="text-yellow-400" />
+                  ))}
+                </div>
+              </div>
             </div>
-            <p className="italic text-gray-300">“{reseña.comentario}”</p>
+            <p className="text-gray-200 italic mb-4">“{reseña.comentario}”</p>
+            <p className="text-sm text-purple-300">{reseña.correo}</p>
           </div>
         ))}
       </div>
-
-      {/* Datos estructurados para SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Review",
-            "itemReviewed": {
-              "@type": "Organization",
-              "name": "Tu Empresa"
-            },
-            "review": reseña
-              ? {
-                  "@type": "Review",
-                  "author": {
-                    "@type": "Person",
-                    "name": reseña.nombre
-                  },
-                  "reviewBody": reseña.comentario,
-                  "reviewRating": {
-                    "@type": "Rating",
-                    "ratingValue": reseña.estrellas,
-                    "bestRating": 5
-                  }
-                }
-              : null
-          })
-        }}
-      />
+      {!isMobile && !showAll && (
+        <div className="flex justify-center mt-8">
+          <button
+            onClick={() => setShowAll(true)}
+            className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all"
+          >
+            Ver más
+          </button>
+        </div>
+      )}
     </section>
   );
 };
