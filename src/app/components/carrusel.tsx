@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
 import "../styles/components/carrusel.css";
@@ -21,20 +21,8 @@ const logos = [
 ];
 
 export default function Carrusel() {
-  const [isMobile, setIsMobile] = useState(false);
   const controls = useAnimation();
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Detectar si es móvil
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   // Animación del carrusel
   useEffect(() => {
