@@ -53,7 +53,7 @@ const Navbar = () => {
 
         {/* Botón "Hablemos" */}
         <a
-          href="https://wa.me/1234567890"
+          href="https://wa.me/3008061344"
           className={styles.btnWhatsapp}
           target="_blank"
           rel="noopener noreferrer"
