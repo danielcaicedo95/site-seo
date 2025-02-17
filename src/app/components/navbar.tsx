@@ -19,27 +19,32 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Cerrar el menú al hacer clic en un enlace
+  const handleLinkClick = () => {
+    setMenuOpen(false);
+  };
+
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.navbarContainer}>
         {/* Logo */}
-        <Link href="/" className={styles.navbarLogo}>
+        <Link href="/" className={styles.navbarLogo} onClick={handleLinkClick}>
           <Image
-            src="/images/logo.png" // Usa WebP para optimización
+            src="/images/logo.png"
             alt="Logo"
             width={120}
             height={50}
-            priority // Mejora el LCP
+            priority
           />
         </Link>
 
         {/* Menú de Navegación */}
         <ul className={`${styles.navbarMenu} ${menuOpen ? styles.active : ""}`}>
-          <li><Link href="/">Inicio</Link></li>
-          <li><Link href="/servicios">Servicios</Link></li>
-          <li><Link href="/sobre-mi">Sobre mi</Link></li>
-          <li><Link href="/contacto">Contacto</Link></li>
-          <li><Link href="/blog">Blog</Link></li>
+          <li><Link href="/" onClick={handleLinkClick}>Inicio</Link></li>
+          <li><Link href="/servicios" onClick={handleLinkClick}>Servicios</Link></li>
+          <li><Link href="/sobre-mi" onClick={handleLinkClick}>Sobre mi</Link></li>
+          <li><Link href="/contacto" onClick={handleLinkClick}>Contacto</Link></li>
+          <li><Link href="/blog" onClick={handleLinkClick}>Blog</Link></li>
           {/* Botón de cierre */}
           {menuOpen && (
             <button
