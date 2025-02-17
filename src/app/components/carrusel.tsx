@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
 import "../styles/components/carrusel.css";
@@ -23,18 +23,26 @@ const logos = [
 export default function Carrusel() {
   const controls = useAnimation();
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Animación del carrusel
   useEffect(() => {
+    setIsMounted(true); // Marcar el componente como montado
+
     if (!containerRef.current) return;
 
     const animateScroll = async () => {
+      if (!isMounted) return; // Verificar si el componente está montado
+
       await controls.start({
         x: "-100%",
         transition: { duration: 15, ease: "linear" },
       });
-      controls.set({ x: "0%" }); // Reinicia la posición
-      animateScroll(); // Repite la animación
+
+      if (!isMounted) return; // Verificar nuevamente antes de reiniciar
+
+      controls.set({ x: "0%" }); // Reiniciar la posición
+      animateScroll(); // Repetir la animación
     };
 
     // Iniciar la animación solo si el componente está montado
@@ -43,8 +51,11 @@ export default function Carrusel() {
     }, 100); // Pequeño retraso para asegurar que el componente esté montado
 
     // Limpiar la animación al desmontar el componente
-    return () => clearTimeout(timeout);
-  }, [controls]);
+    return () => {
+      setIsMounted(false); // Marcar el componente como desmontado
+      clearTimeout(timeout);
+    };
+  }, [controls, isMounted]);
 
   return (
     <div className="carrusel-container">
