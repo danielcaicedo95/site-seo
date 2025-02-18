@@ -10,7 +10,7 @@ const nextConfig = {
     unoptimized: false,
   },
   experimental: {
-    scrollRestoration: true,
+    scrollRestoration: false,
   },
 };
 
