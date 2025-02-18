@@ -5,7 +5,6 @@ import { Metadata } from 'next';
 
 import Navbar from "@/app/components/navbar";
 import Portada from "@/app/components/portada";
-import Carrusel from "@/app/components/carrusel";
 import Presentacion from "@/app/components/presentacion";
 import ServiciosSeo from "@/app/components/servicios-seo";
 import Cms from "@/app/components/cms";
@@ -80,7 +79,6 @@ const Home: React.FC = () => {
     <div>
       <Navbar />
       <Portada imagen={portadaData.imagen} titulo={portadaData.titulo} descripcion={portadaData.descripcion} />
-      <Carrusel />
       <Presentacion imageSrc={presentacionData.imageSrc} title={presentacionData.title} text={presentacionData.text} />
       
       {/* Sección de Servicios SEO con imágenes */}
