@@ -4,13 +4,14 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const nextConfig = {
   reactStrictMode: true,
-  // Removido: swcMinify: true (ya está habilitado por defecto en Next.js reciente)
+  // Removido: swcMinify (ya no necesario en Next.js 15+)
   images: {
     formats: ['image/avif', 'image/webp'],
     unoptimized: false,
   },
+  // Revisa si esta configuración experimental sigue siendo válida en Next.js 15+
+  // Si experimentas problemas, considera comentar o eliminar esta sección
   experimental: {
-    // Verifica que esta opción experimental esté disponible en tu versión de Next.js
     scrollRestoration: false,
   },
 };

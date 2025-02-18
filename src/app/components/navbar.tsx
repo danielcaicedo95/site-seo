@@ -8,18 +8,29 @@ import styles from "../styles/components/navbar.module.css";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  // Manejar el scroll de manera eficiente
+  // Verificar montaje para evitar problemas de hidratación
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    setMounted(true);
+  }, []);
+
+  // Manejar el scroll de manera segura
+  useEffect(() => {
+    if (typeof window !== 'undefined' && mounted) {
       const handleScroll = () => {
         setScrolled(window.scrollY > 50);
       };
-  
+
       window.addEventListener("scroll", handleScroll, { passive: true });
       return () => window.removeEventListener("scroll", handleScroll);
     }
-  }, []);
+  }, [mounted]);
+
+  // Salir temprano si no está montado para evitar errores de hidratación
+  if (!mounted) {
+    return <nav className={styles.navbar}><div className={styles.navbarContainer}></div></nav>;
+  }
 
   // Cerrar el menú al hacer clic en un enlace
   const handleLinkClick = () => {
