@@ -12,15 +12,12 @@ interface PortadaProps {
 const Portada: React.FC<PortadaProps> = ({ imagen, titulo, descripcion }) => {
   return (
     <section className="relative w-full min-h-[500px] sm:min-h-[600px] md:min-h-[700px] flex items-center justify-center overflow-hidden">
-      {/* Precarga de la imagen */}
-      <link rel="preload" href={imagen} as="image" />
-
-      {/* Imagen de fondo optimizada */}
+      {/* Imagen optimizada con precarga automática controlada */}
       <Image
         src={imagen}
         alt="Portada background"
         fill
-        priority
+        priority={true} // ¡Este es el único necesario para precargar!
         quality={75}
         className="object-cover object-center -z-10"
       />
