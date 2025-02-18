@@ -5,7 +5,6 @@ import { Metadata } from 'next';
 
 import Navbar from "@/app/components/navbar";
 import Portada from "@/app/components/portada";
-import Carrusel from "@/app/components/carrusel";
 import Presentacion from "@/app/components/presentacion";
 import ServiciosSeo from "@/app/components/servicios-seo";
 import Cms from "@/app/components/cms";
