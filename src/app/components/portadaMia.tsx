@@ -7,15 +7,14 @@ import { motion } from "framer-motion";
 const Portada = () => {
   return (
     <section className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] flex items-center justify-center">
-      {/* Precargar la imagen de fondo */}
-      <link rel="preload" href="/images/portada3.jpg" as="image" />
+    
 
       {/* Imagen de fondo optimizada */}
       <Image
         src="/images/portada3.jpg"
         alt="Fondo de portada"
         fill
-        priority
+        priority={true}
         quality={75}
         className="object-cover object-center"
       />

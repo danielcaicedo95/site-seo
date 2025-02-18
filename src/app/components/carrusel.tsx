@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useAnimation } from "framer-motion";
 
 const logos = [
   "/images/carrusel/logo1.png",
@@ -20,67 +19,114 @@ const logos = [
 ];
 
 export default function Carrusel() {
-  const controls = useAnimation();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isMounted, setIsMounted] = useState(false);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [loaded, setLoaded] = useState(false);
 
-  // Animación del carrusel
   useEffect(() => {
-    setIsMounted(true); // Marcar el componente como montado
+    const track = trackRef.current;
+    if (!track) return;
 
-    if (!containerRef.current) return;
+    const animate = () => {
+      track.style.transition = "none";
+      track.style.transform = `translateX(0%)`;
 
-    const animateScroll = async () => {
-      if (!isMounted) return; // Verificar si el componente está montado
-
-      await controls.start({
-        x: "-100%",
-        transition: { duration: 15, ease: "linear" },
+      requestAnimationFrame(() => {
+        track.style.transition = "transform 30s linear";
+        track.style.transform = `translateX(-100%)`;
       });
-
-      if (!isMounted) return; // Verificar nuevamente antes de reiniciar
-
-      controls.set({ x: "0%" }); // Reiniciar la posición
-      animateScroll(); // Repetir la animación
     };
 
-    // Iniciar la animación solo si el componente está montado
-    const timeout = setTimeout(() => {
-      animateScroll();
-    }, 100); // Pequeño retraso para asegurar que el componente esté montado
+    const interval = setInterval(animate, 30000);
+    animate();
 
-    // Limpiar la animación al desmontar el componente
-    return () => {
-      setIsMounted(false); // Marcar el componente como desmontado
-      clearTimeout(timeout);
-    };
-  }, [controls, isMounted]);
+    setLoaded(true); // ✅ Evita FOUC mostrando el carrusel solo cuando esté listo
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="relative w-full max-w-[1200px] mx-auto overflow-hidden py-2.5 bg-gray-900 rounded-lg shadow-[0px_4px_20px_rgba(0,255,255,0.3)] mt-2.5">
-      {/* Contenedor del carrusel */}
-      <motion.div
-        ref={containerRef}
-        className="flex gap-4 cursor-grab py-2.5"
-        animate={controls}
-      >
+    <div className={`carrusel-container ${loaded ? "visible" : ""}`}>
+      <div ref={trackRef} className="carrusel-track">
         {[...logos, ...logos].map((logo, i) => (
-          <div
-            key={i}
-            className="relative w-[140px] h-[70px] flex items-center justify-center flex-shrink-0 bg-[rgba(0,255,255,0.192)] rounded-lg shadow-[0px_2px_6px_rgba(0,255,255,0.3)] transition-transform duration-300 ease-in-out hover:scale-110"
-          >
+          <div key={i} className="carrusel-item">
             <Image
               src={logo}
               alt={`Logo ${i + 1}`}
               width={160}
               height={80}
-              priority={i < 3} // Prioridad para las primeras imágenes
+              priority={i < 3}
               loading={i >= 3 ? "lazy" : "eager"}
-              className="w-full h-auto object-contain filter drop-shadow-[0px_4px_8px_rgba(0,255,255,0.3)]"
+              className="carrusel-img"
             />
           </div>
         ))}
-      </motion.div>
+      </div>
+
+      {/* Estilos en el mismo archivo */}
+      <style jsx>{`
+        .carrusel-container {
+          position: relative;
+          width: 100%;
+          max-width: 1200px;
+          margin: auto;
+          overflow: hidden;
+          padding: 10px 0;
+          background: rgb(17 24 39 / var(--tw-bg-opacity, 1));
+          border-radius: 12px;
+          box-shadow: 0px 4px 20px rgba(0, 255, 255, 0.3);
+          margin-top: 10px;
+          opacity: 0; /* 🔹 Oculta el carrusel al cargar */
+          transition: opacity 0.5s ease-in-out;
+        }
+
+        .carrusel-container.visible {
+          opacity: 1; /* 🔹 Lo muestra cuando está listo */
+        }
+
+        .carrusel-track {
+          display: flex;
+          gap: 16px;
+          cursor: grab;
+          padding: 10px 0;
+          will-change: transform;
+        }
+
+        .carrusel-item {
+          position: relative;
+          width: 140px;
+          height: 70px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          background: rgba(0, 255, 255, 0.192);
+          border-radius: 10px;
+          box-shadow: 0px 2px 6px rgba(0, 255, 255, 0.3);
+          transition: transform 0.3s ease-in-out;
+        }
+
+        .carrusel-item:hover {
+          transform: scale(1.1);
+        }
+
+        .carrusel-img {
+          width: 100%;
+          height: auto;
+          object-fit: contain;
+          filter: drop-shadow(0px 4px 8px rgba(0, 255, 255, 0.3));
+        }
+
+        @media (max-width: 768px) {
+          .carrusel-container {
+            padding: 5px 0;
+          }
+
+          .carrusel-item {
+            width: 120px;
+            height: 60px;
+          }
+        }
+      `}</style>
     </div>
   );
 }
