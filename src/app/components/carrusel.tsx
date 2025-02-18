@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const logos = [
@@ -19,50 +19,30 @@ const logos = [
 ];
 
 export default function Carrusel() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [loaded, setLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const animate = () => {
-      track.style.transition = "none";
-      track.style.transform = `translateX(0%)`;
-
-      requestAnimationFrame(() => {
-        track.style.transition = "transform 30s linear";
-        track.style.transform = `translateX(-100%)`;
-      });
-    };
-
-    const interval = setInterval(animate, 30000);
-    animate();
-
-    setLoaded(true); // ✅ Evita FOUC mostrando el carrusel solo cuando esté listo
-
-    return () => clearInterval(interval);
+    setTimeout(() => setIsLoaded(true), 200); // Espera para evitar CLS
   }, []);
 
   return (
-    <div className={`carrusel-container ${loaded ? "visible" : ""}`}>
-      <div ref={trackRef} className="carrusel-track">
+    <div className={`carrusel-container ${isLoaded ? "visible" : "hidden"}`}>
+      <div className="carrusel-track">
         {[...logos, ...logos].map((logo, i) => (
           <div key={i} className="carrusel-item">
             <Image
               src={logo}
               alt={`Logo ${i + 1}`}
-              width={160}
-              height={80}
+              width={140}
+              height={70}
               priority={i < 3}
-              loading={i >= 3 ? "lazy" : "eager"}
               className="carrusel-img"
             />
           </div>
         ))}
       </div>
 
-      {/* Estilos en el mismo archivo */}
+      {/* Estilos optimizados */}
       <style jsx>{`
         .carrusel-container {
           position: relative;
@@ -75,20 +55,24 @@ export default function Carrusel() {
           border-radius: 12px;
           box-shadow: 0px 4px 20px rgba(0, 255, 255, 0.3);
           margin-top: 10px;
-          opacity: 0; /* 🔹 Oculta el carrusel al cargar */
-          transition: opacity 0.5s ease-in-out;
         }
 
-        .carrusel-container.visible {
-          opacity: 1; /* 🔹 Lo muestra cuando está listo */
+        .hidden {
+          visibility: hidden;
+        }
+
+        .visible {
+          visibility: visible;
+          transition: visibility 0.2s;
         }
 
         .carrusel-track {
           display: flex;
           gap: 16px;
-          cursor: grab;
           padding: 10px 0;
           will-change: transform;
+          animation: scroll 30s linear infinite;
+          width: max-content;
         }
 
         .carrusel-item {
@@ -111,9 +95,20 @@ export default function Carrusel() {
 
         .carrusel-img {
           width: 100%;
-          height: auto;
+          height: 100%;
           object-fit: contain;
           filter: drop-shadow(0px 4px 8px rgba(0, 255, 255, 0.3));
+          min-width: 140px;
+          min-height: 70px;
+        }
+
+        @keyframes scroll {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-50%);
+          }
         }
 
         @media (max-width: 768px) {
