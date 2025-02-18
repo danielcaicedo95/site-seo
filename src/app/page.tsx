@@ -80,7 +80,6 @@ const Home: React.FC = () => {
     <div>
       <Navbar />
       <Portada imagen={portadaData.imagen} titulo={portadaData.titulo} descripcion={portadaData.descripcion} />
-      <Carrusel />
       <Presentacion imageSrc={presentacionData.imageSrc} title={presentacionData.title} text={presentacionData.text} />
       
       {/* Sección de Servicios SEO con imágenes */}

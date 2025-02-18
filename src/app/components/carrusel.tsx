@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
-import "../styles/components/carrusel.css";
 
 const logos = [
   "/images/carrusel/logo1.png",
@@ -58,11 +57,18 @@ export default function Carrusel() {
   }, [controls, isMounted]);
 
   return (
-    <div className="carrusel-container">
+    <div className="relative w-full max-w-[1200px] mx-auto overflow-hidden py-2.5 bg-gray-900 rounded-lg shadow-[0px_4px_20px_rgba(0,255,255,0.3)] mt-2.5">
       {/* Contenedor del carrusel */}
-      <motion.div ref={containerRef} className="carrusel-track" animate={controls}>
+      <motion.div
+        ref={containerRef}
+        className="flex gap-4 cursor-grab py-2.5"
+        animate={controls}
+      >
         {[...logos, ...logos].map((logo, i) => (
-          <div key={i} className="carrusel-item">
+          <div
+            key={i}
+            className="relative w-[140px] h-[70px] flex items-center justify-center flex-shrink-0 bg-[rgba(0,255,255,0.192)] rounded-lg shadow-[0px_2px_6px_rgba(0,255,255,0.3)] transition-transform duration-300 ease-in-out hover:scale-110"
+          >
             <Image
               src={logo}
               alt={`Logo ${i + 1}`}
@@ -70,7 +76,7 @@ export default function Carrusel() {
               height={80}
               priority={i < 3} // Prioridad para las primeras imágenes
               loading={i >= 3 ? "lazy" : "eager"}
-              className="carrusel-img"
+              className="w-full h-auto object-contain filter drop-shadow-[0px_4px_8px_rgba(0,255,255,0.3)]"
             />
           </div>
         ))}
