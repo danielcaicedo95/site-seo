@@ -22,32 +22,35 @@ const Navbar = () => {
         setScrolled(window.scrollY > 50);
       };
 
+      // Verificar posición inicial
+      handleScroll();
+      
       window.addEventListener("scroll", handleScroll, { passive: true });
       return () => window.removeEventListener("scroll", handleScroll);
     }
   }, [mounted]);
-
-  // Salir temprano si no está montado para evitar errores de hidratación
-  if (!mounted) {
-    return <nav className={styles.navbar}><div className={styles.navbarContainer}></div></nav>;
-  }
 
   // Cerrar el menú al hacer clic en un enlace
   const handleLinkClick = () => {
     setMenuOpen(false);
   };
 
+  // Renderizar un placeholder hasta que el componente esté montado
+  if (!mounted) {
+    return <nav className={styles.navbar}><div className={styles.navbarContainer}></div></nav>;
+  }
+
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.navbarContainer}>
-        {/* Logo */}
+        {/* Logo - quitamos priority */}
         <Link href="/" className={styles.navbarLogo} onClick={handleLinkClick}>
           <Image
             src="/images/logo.png"
             alt="Logo"
             width={120}
             height={50}
-            priority
+            loading="eager" // en lugar de priority
           />
         </Link>
 
