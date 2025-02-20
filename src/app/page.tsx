@@ -12,6 +12,7 @@ import Cms from "@/app/components/cms";
 import Logros from "@/app/components/logros";
 import Reseñas from "@/app/components/reseñas"; 
 import Footer from "@/app/components/footer"; 
+import FAQ from "./components/faqs";
 import Contacto from "./components/contactForm";
 
 // 🔹 Definir la interfaz aquí directamente para evitar errores
@@ -76,6 +77,50 @@ const Home: React.FC = () => {
     },
   ];
 
+  const faqs = [
+    {
+      question: "¿Cómo mejorar el SEO en 2025?",
+      answer: "Para destacar en Google este año, es fundamental adaptar el SEO a SGE (Search Generative Experience) y EEAT (Experiencia, Pericia, Autoridad y Confianza). Implementa estrategias basadas en contenido optimizado para búsquedas conversacionales, mejora la velocidad web y utiliza datos estructurados para mejorar la visibilidad en los resultados enriquecidos."
+    },
+    {
+      question: "¿Qué es EEAT y cómo afecta al posicionamiento web?",
+      answer: "EEAT evalúa la experiencia, especialización, autoridad y confianza de un sitio web. Para mejorar tu EEAT, es clave contar con contenido escrito por expertos, incluir fuentes verificables, generar backlinks de calidad y optimizar la identidad digital mediante reseñas y menciones en sitios de autoridad."
+    },
+    {
+      question: "¿Cómo posicionar un sitio web en varios países con SEO internacional?",
+      answer: "El SEO internacional requiere una correcta implementación de etiquetas hreflang, optimización de contenido multilingüe y estrategias de link building adaptadas a cada mercado. Además, es clave usar dominios geolocalizados o subdirectorios específicos para cada región para mejorar la relevancia y la experiencia del usuario."
+    },
+    {
+      question: "¿Cuáles son las mejores herramientas SEO para mejorar el posicionamiento?",
+      answer: "Algunas herramientas esenciales son Ahrefs y Semrush para análisis de palabras clave y backlinks, Screaming Frog y Google Search Console para auditoría técnica, y SurferSEO para optimización de contenido. Usar estas herramientas te permitirá mejorar la indexación y la estrategia de SEO on-page y off-page."
+    },
+    {
+      question: "¿Cómo adaptar mi web a la SGE (Search Generative Experience) de Google?",
+      answer: "Para optimizar tu web para SGE, crea contenido basado en preguntas y respuestas, implementa datos estructurados, mejora la experiencia de usuario (UX) y usa técnicas de SEO semántico. La SGE favorece respuestas claras y bien estructuradas, por lo que es clave ofrecer información relevante y confiable."
+    },
+    {
+      question: "¿Cómo mejorar el SEO local y posicionar en Google Maps?",
+      answer: "Optimiza tu ficha de Google My Business con información detallada, publica contenido geolocalizado, fomenta las reseñas de clientes y usa datos estructurados LocalBusiness. Además, genera backlinks locales y menciones en directorios para aumentar la autoridad de tu negocio en tu área."
+    },
+    {
+      question: "¿Cuánto tiempo tarda el SEO en mostrar resultados?",
+      answer: "El SEO es una estrategia a medio-largo plazo. Factores como la competencia, la autoridad del dominio, la optimización técnica y la calidad del contenido influyen en los tiempos. Generalmente, se pueden ver mejoras en 3 a 6 meses, pero los resultados más sólidos llegan después del primer año."
+    },
+    {
+      question: "¿Cómo automatizar procesos SEO para mejorar la eficiencia?",
+      answer: "La automatización en SEO permite escalar estrategias mediante inteligencia artificial y herramientas como Zapier, Screaming Frog y Google Looker Studio. Puedes automatizar auditorías, generación de metadatos, seguimiento de posiciones y link building, mejorando la eficiencia y el tiempo de respuesta."
+    },
+    {
+      question: "¿Cuáles son las diferencias entre SEO para ecommerce y SEO para servicios?",
+      answer: "El SEO para ecommerce se centra en optimizar fichas de productos, datos estructurados y experiencia de compra. El SEO para servicios prioriza la generación de leads, contenido informativo y SEO local. Ambos requieren estrategias de contenido y backlinks adaptadas a su audiencia."
+    },
+    {
+      question: "¿Cómo estructurar un sitio web para un mejor posicionamiento SEO?",
+      answer: "Una arquitectura web optimizada mejora la rastreabilidad y experiencia del usuario. Usa URLs limpias, menús bien jerarquizados, enlaces internos estratégicos y datos estructurados. Además, optimiza la velocidad de carga y aplica Core Web Vitals para garantizar un rendimiento óptimo."
+    }
+  ];
+  
+
   return (
     <div>
       <Navbar />
@@ -89,6 +134,7 @@ const Home: React.FC = () => {
       <Cms />
       <Logros />
       <Reseñas />
+      <FAQ faqs={faqs} />
       <Contacto/>
       
       <Footer />

@@ -13,10 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: 'SEO Dani', // Título por defecto
-    template: '%s | SEO Dani', // Plantilla para títulos de páginas específicas
-  },
+  
   description: 'Descripción global de mi sitio web.',
   keywords: ['Next.js', 'SEO', 'Dani'], // Palabras clave globales
   authors: [{ name: 'Daniel', url: 'https://example.com' }], // Autor global

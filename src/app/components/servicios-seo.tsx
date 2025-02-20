@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import styles from "../styles/components/servicios-seo.module.css";
 import Image from "next/image";
 import { useEffect } from "react";
+import clsx from "clsx";
 
 interface Servicio {
   titulo: string;
@@ -52,9 +53,10 @@ const ServiciosSeo: React.FC<ServiciosSeoProps> = ({ servicios }) => {
       {servicios.map((servicio, index) => (
         <motion.div
           key={index}
-          className={`${styles.servicio} ${
-            servicio.posicionImagen === "left" ? styles["reverse-servicio"] : ""
-          }`}
+          className={clsx(
+            styles.servicio,
+            servicio.posicionImagen === "left" && styles["reverse-servicio"]
+          )}
           itemScope
           itemType="https://schema.org/Service"
           initial={{ opacity: 0, y: 50 }}

@@ -5,77 +5,89 @@ import { useEffect } from "react";
 
 const servicios = [
   {
-    titulo: "SEO On Page",
+    titulo: "SEO On Site",
     descripcion: "Optimizamos el contenido y la estructura interna de tu sitio para mejorar su relevancia.",
-    tareas: [
-      "Optimización de meta títulos y descripciones",
-      "Estructura de encabezados (H1, H2, H3...)",
-      "Mejora de la legibilidad y UX del contenido",
-      "Optimización de imágenes (alt, tamaños, formatos)",
-      "Uso correcto de enlaces internos",
-      "Implementación de datos estructurados",
-    ],
+    "tareas": [
+    "Optimización de títulos y descripciones (metadata)",
+    "Análisis y estudio de palabras clave (KW Research)",
+    "Jerarquización y estructura de encabezados (H1, H2, H3…)",
+    "Mejora de legibilidad, semántica y UX del contenido",
+    "Optimización de imágenes (atributo alt, tamaños y formatos adecuados)",
+    "Estrategias de enlazado interno (interlinking) para mejorar indexación",
+    "Implementación avanzada de datos estructurados (Schema: JSON-LD, microdatos, RDFa)"
+  ]
   },
   {
     titulo: "SEO Off Page",
     descripcion: "Aumentamos la autoridad de tu sitio mediante estrategias de enlaces y menciones.",
-    tareas: [
-      "Link building estratégico",
-      "Guest posting en blogs de autoridad",
-      "Creación de menciones en redes sociales",
+    "tareas": [
+      "Link Building estratégico y enlazado externo",
+      "Guest Posting y Guest Blogging en blogs de autoridad",
+      "Marketing de Contenidos para adquisición de enlaces",
+      "Estrategia de backlinks y enlaces referidos",
+      "Interacción social y menciones de marca",
       "Optimización de Google My Business",
       "Gestión de reseñas y reputación online",
       "Análisis de backlinks de la competencia",
-    ],
+      "Mejora de autoridad de dominio",
+      "Disavow Links para eliminar enlaces tóxicos",
+      "Obtención de enlaces dofollow de calidad",
+      "Relaciones públicas digitales para fortalecer el SEO"
+    ]
   },
   {
     titulo: "SEO Técnico",
     descripcion: "Mejoramos la estructura del sitio para que los motores de búsqueda lo indexen eficientemente.",
-    tareas: [
-      "Corrección de errores de rastreo",
-      "Optimización de velocidad y Core Web Vitals",
-      "Implementación de sitemap y robots.txt",
-      "Mejora de la indexabilidad con etiquetas canónicas",
-      "Optimización de redirecciones y estructura de URL",
-      "Implementación de HTTPS y seguridad web",
-    ],
+    "tareas": [
+    "Corrección de errores de rastreo e indexación",
+    "Implementación y optimización de sitemap y robots.txt",
+    "Migraciones SEO: Optimización de redirecciones y estructura de URL",
+    "Implementación de HTTPS y mejora de la seguridad web",
+    "Optimización de recursos y carga eficiente (CSS, JS, imágenes)",
+    "Estrategia Mobile-First y diseño responsive",
+    "Implementación y optimización de AMP",
+    "Corrección de errores de códigos de estado (4xx, 5xx)",
+    "Optimización de JavaScript SEO para mejorar el renderizado",
+    "Arquitectura web optimizada para mejor rastreo e indexación",
+    ]
   },
   {
     titulo: "Estrategia SEO",
     descripcion: "Desarrollamos una estrategia SEO personalizada para maximizar el tráfico y conversiones.",
-    tareas: [
-      "Análisis de palabras clave",
-      "Estudio de competencia y mercado",
-      "Planificación de contenido SEO",
-      "Estrategia de enlazado interno",
-      "Optimización de la experiencia del usuario (UX)",
-      "Consultoría y seguimiento personalizado",
-    ],
+    "tareas": [
+    "Análisis de competencia y benchmarking SEO",
+    "Estrategia de posicionamiento y roadmap SEO",
+    "Planificación de contenidos y estrategia de palabras clave",
+    "SEO estratégico y optimización para Google SGE",
+    "Implementación y revisión de EEAT en contenido de calidad",
+    "Consultoría en liderazgo digital y estrategia de marketing SEO"
+  ]
   },
   {
-    titulo: "Automatización SEO",
+    titulo: "SEO Local",
     descripcion: "Utilizamos herramientas avanzadas para optimizar procesos y ahorrar tiempo.",
-    tareas: [
-      "Generación automatizada de meta tags",
-      "Análisis de SEO con IA",
-      "Monitorización de rankings en tiempo real",
-      "Automatización de informes SEO",
-      "Optimización de contenido con algoritmos inteligentes",
-      "Alertas automáticas de errores SEO",
-    ],
+    "tareas": [
+    "Optimización de Google My Business y ficha de Google",
+    "Estrategias locales para mejorar posicionamiento en Google Maps",
+    "Gestión de reseñas, opiniones y reputación online",
+    "Implementación de NAP (Nombre, Dirección y Teléfono) y citaciones locales",
+    "SEO para pequeñas empresas, pymes y negocios locales",
+    "Geolocalización y SEO en Google Maps para mayor visibilidad"
+  ]
   },
   {
-    titulo: "Creación de Sitios Web SEO",
-    descripcion: "Desarrollamos sitios en Next.js y CMS optimizados para el posicionamiento desde el inicio.",
-    tareas: [
-      "Desarrollo en Next.js con SEO integrado",
-      "Implementación de CMS (WordPress, Shopify, etc.)",
-      "Optimización de velocidad y rendimiento",
-      "Diseño UX/UI enfocado en conversión",
-      "Implementación de datos estructurados",
-      "Hosting y configuración técnica optimizada",
-    ],
-  },
+    "titulo": "Automatización y Desarrollo SEO",
+    "descripcion": "Automatizamos procesos SEO con herramientas avanzadas e IA, y creamos sitios web optimizados en Next.js",
+    "tareas": [
+      "SEO automatizado con bots, scraping y análisis con IA",
+      "Generación automática de meta tags y datos estructurados",
+      "Monitorización SEO en tiempo real y alertas de errores",
+      "Desarrollo de sitios web en Next.js con SEO integrado",
+      "Implementación de CMS optimizados (WordPress, Shopify, etc.)",
+      "Optimización de velocidad, UX/UI y rendimiento técnico"
+    ]
+  }
+  
 ];
 
 const ServiciosCompletos = () => {
@@ -129,9 +141,9 @@ const ServiciosCompletos = () => {
             transition={{ duration: 0.3, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.1 }}
           >
-            <h3 className="text-2xl font-semibold text-[#00ffcc] mb-3">
+            <h2 className="text-2xl font-semibold text-[#00ffcc] mb-3">
               {servicio.titulo}
-            </h3>
+            </h2>
             <p className="text-gray-300 mb-4">{servicio.descripcion}</p>
             <ul className="list-disc pl-5 text-gray-400">
               {servicio.tareas.map((tarea, i) => (

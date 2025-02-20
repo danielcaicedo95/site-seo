@@ -1,5 +1,3 @@
-"use client";
-
 import Navbar from "@/app/components/navbar";
 import Portada from "@/app/components/portadaMia";
 import SobreMi from "@/app/components/sobreMi";
@@ -10,25 +8,33 @@ import Educacion from "../components/educacion";
 import Habilidades from "../components/habilidades";
 import ProyectosPersonales from "../components/proyectos";
 import ContactForm from "../components/contactForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Consultor SEO - Técnico, On Page, Off Page e IA | Daniel C",
+  description:
+    "Especialista SEO en Colombia con más de 6 años de experiencia usando diferentes CMS, como WordPress, Magento, Shopify y Drupal. Experto en SEO para eCommerce y aumento de tráfico orgánico. Haz clic para conocerme.",
+  keywords: ["inicio", "Next.js", "SEO"],
+  alternates: {
+    canonical: "https://home.com",
+  },
+};
 
 const About = () => {
   return (
     <main>
       <Navbar />
-
       {/* Portada principal */}
       <Portada />
-
       {/* Sección de información adicional */}
-      <SobreMi/>
-
-      <ExperienciaLaboral/>
-      <Carrusel/>
-      <Educacion/>
-      <Habilidades/>
-      <ProyectosPersonales/>
-      <ContactForm/>
-      <Footer/>
+      <SobreMi />
+      <ExperienciaLaboral />
+      <Carrusel />
+      <Educacion />
+      <Habilidades />
+      <ProyectosPersonales />
+      <ContactForm />
+      <Footer />
     </main>
   );
 };

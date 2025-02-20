@@ -1,4 +1,20 @@
-import { FaLightbulb, FaUsers, FaChartLine, FaComments, FaCogs, FaBullseye, FaSearch, FaCode, FaLaptopCode, FaChartBar, FaRobot, FaGlobe, FaMobileAlt } from "react-icons/fa";
+"use client";
+
+import { 
+  FaLightbulb, 
+  FaUsers, 
+  FaChartLine, 
+  FaComments, 
+  FaCogs, 
+  FaBullseye, 
+  FaSearch, 
+  FaCode, 
+  FaLaptopCode, 
+  FaChartBar, 
+  FaRobot, 
+  FaGlobe, 
+  FaMobileAlt 
+} from "react-icons/fa";
 import { motion } from "framer-motion";
 
 const habilidades = [
@@ -36,18 +52,18 @@ export default function Habilidades() {
         {habilidades.map((categoria, index) => (
           <motion.div
             key={index}
-            className="p-6 rounded-xl bg-gray-800 shadow-lg hover:shadow-xl transition duration-1"
+            className="p-6 rounded-xl bg-gray-800 shadow-lg hover:shadow-xl transition duration-300"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.1, delay: index * 0.5, ease: "easeOut" }}
+            transition={{ duration: 0.3, delay: index * 0.2, ease: "easeOut" }}
           >
             <h3 className="text-xl font-semibold text-purple-300 mb-4">{categoria.categoria}</h3>
             <div className="space-y-4">
               {categoria.items.map((habilidad, i) => (
                 <motion.div
                   key={i}
-                  className="flex items-center gap-4 p-4 rounded-lg bg-gray-900 hover:bg-gray-700 transition duration-2 cursor-pointer"
+                  className="flex items-center gap-4 p-4 rounded-lg bg-gray-900 hover:bg-gray-700 transition duration-300 cursor-pointer"
                   whileHover={{ scale: 1.05 }}
                 >
                   <div className="text-3xl text-purple-400">{habilidad.icon}</div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Code, Globe, Zap } from "lucide-react";
@@ -48,7 +50,7 @@ export default function ProyectosPersonales() {
             key={index}
             className="relative w-40 h-40 flex items-center justify-center rounded-full border border-gray-500 bg-gray-900 shadow-lg cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-xl"
             style={{
-              boxShadow: "0 4px 20px rgba(0, 102, 255, 0.3)", // Sutil brillo azul
+              boxShadow: "0 4px 20px rgba(0, 102, 255, 0.3)",
             }}
             onMouseEnter={() => setHoverIndex(index)}
             onMouseLeave={() => setHoverIndex(null)}

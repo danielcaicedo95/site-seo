@@ -89,7 +89,7 @@ export default function Contacto() {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.1 }}
         >
-          <h1 className="text-4xl font-bold mb-4">¡Hablemos!</h1>
+          <h2 className="text-4xl font-bold mb-4">¡Hablemos!</h2>
           <p className="text-lg">
             Si tienes alguna pregunta o simplemente quieres ponerte en contacto, no dudes en enviarme un mensaje. Estaré encantado de ayudarte.
           </p>
