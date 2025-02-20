@@ -107,33 +107,48 @@ const Contact = () => {
         descripcion={portadaData.descripcion}
       />
       <div className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold text-center mt-8">Contáctame  para Mejorar tu SEO en Colombia</h2>
-        <p className="text-center mt-4">
-          ¿Necesitas ayuda con el posicionamiento de tu sitio web? ¡Escríbenos o llámanos al <a href="tel:+573008061344" className="text-blue-500">+57 300 806 1344</a> y te asesoraremos!
+        <h2 className="text-2xl font-bold text-center mt-8 text-purple-600">
+          Contáctanos para Mejorar tu SEO en Colombia
+        </h2>
+        <p className="text-center mt-4 text-gray-700">
+          ¿Necesitas ayuda con el posicionamiento de tu sitio web? ¡Escríbenos o llámanos al{" "}
+          <a href="tel:+573008061344" className="text-blue-500 hover:text-blue-700">
+            +57 300 806 1344
+          </a>{" "}
+          y te asesoraremos!
         </p>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
+          <div className="w-full">
             <ContactForm />
           </div>
-          <div className="bg-gray-50 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold">Información de Contacto</h3>
-            <ul className="mt-4 space-y-2">
+          <div className="bg-gradient-to-br from-blue-900 to-purple-900 p-6 rounded-lg shadow-lg">
+            <h3 className="text-xl font-semibold text-white">Información de Contacto</h3>
+            <ul className="mt-4 space-y-2 text-gray-200">
               <li>
-                <strong>Teléfono:</strong> <a href="tel:+573008061344" className="text-blue-500">+57 300 806 1344</a>
+                <strong>Teléfono:</strong>{" "}
+                <a href="tel:+573008061344" className="text-blue-400 hover:text-blue-300">
+                  +57 300 806 1344
+                </a>
               </li>
               <li>
-                <strong>Email:</strong> <a href="mailto:info@daniseo.site" className="text-blue-500">info@daniseo.site</a>
+                <strong>Email:</strong>{" "}
+                <a href="danielcaicedoco@gmail.com" className="text-blue-400 hover:text-blue-300">
+                  info@daniseo.site
+                </a>
               </li>
               <li>
                 <strong>Horario de Atención:</strong> Lunes a Viernes, 9:00 AM - 6:00 PM
               </li>
             </ul>
             <div className="mt-6">
-              <h3 className="text-xl font-semibold">Encuéntranos en Redes Sociales</h3>
+              <h3 className="text-xl font-semibold text-white">Encuéntranos en Redes Sociales</h3>
               <div className="flex space-x-4 mt-4">
-                <a href="https://linkedin.com/in/daniseo" className="text-blue-500">LinkedIn</a>
-                <a href="https://twitter.com/daniseo" className="text-blue-500">Twitter</a>
-                <a href="https://instagram.com/daniseo" className="text-blue-500">Instagram</a>
+                <a href="https://linkedin.com/in/daniseo" className="hover:opacity-80">
+                  <img src="/images/linkedin.png" alt="LinkedIn" className="w-8 h-8" />
+                </a>
+                <a href="https://github.com/daniseo" className="hover:opacity-80">
+                  <img src="/images/github.png" alt="GitHub" className="w-8 h-8" />
+                </a>
               </div>
             </div>
           </div>
@@ -148,13 +163,13 @@ const Contact = () => {
           "name": "Daniel C - Especialista SEO",
           "image": "https://daniseo.site/images/portada1.jpg",
           "telephone": "+573008061344",
-          "email": "info@daniseo.site",
+          "email": "danielcaicedoco@gmail.com",
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Colombia",
-            "addressRegion": "Bogotá",
-            "postalCode": "110111",
-            "streetAddress": "Calle 123 # 45-67",
+            "addressRegion": "Pasto",
+            "postalCode": "520001",
+            "streetAddress": "Cr 21 # 6 - 124",
           },
           "url": "https://daniseo.site",
           "openingHours": "Mo-Fr 09:00-18:00",
