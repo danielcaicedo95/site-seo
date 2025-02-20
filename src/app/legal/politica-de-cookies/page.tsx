@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: 'Política de cookies del sitio web de Daniel Caicedo, consultor SEO en Colombia. Conoce cómo utilizamos las cookies y cómo gestionarlas.',
   keywords: ['política de cookies', 'cookies', 'SEO', 'Colombia'],
   alternates: {
-    canonical: 'https://daniseo.site/politica-de-cookies',
+    canonical: 'https://daniseo.site/legal/politica-de-cookies',
   },
 };
 

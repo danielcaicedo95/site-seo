@@ -58,20 +58,20 @@ const Footer = () => {
           {
             title: "SEO por Ciudades",
             links: [
-              { name: "SEO Cali", url: "/seo-cali" },
-              { name: "SEO Bogotá", url: "/seo-bogota" },
-              { name: "SEO Medellín", url: "/seo-medellin" },
-              { name: "SEO Pasto", url: "/seo-pasto" },
+              { name: "SEO Cali", url: "/servicios" },
+              { name: "SEO Bogotá", url: "/servicios" },
+              { name: "SEO Medellín", url: "/servicios" },
+              { name: "SEO Pasto", url: "/servicios" },
             ],
           },
           {
             title: "Servicios",
             links: [
-              { name: "SEO", url: "/seo" },
-              { name: "SEM", url: "/sem" },
-              { name: "Desarrollo", url: "/desarrollo" },
-              { name: "IA SEO", url: "/ia-seo" },
-              { name: "Automatización", url: "/automatizacion" },
+              { name: "SEO", url: "/servicios" },
+              { name: "SEM", url: "/servicios" },
+              { name: "Desarrollo", url: "/servicios" },
+              { name: "IA SEO", url: "/servicios" },
+              { name: "Automatización", url: "/servicios" },
             ],
           },
           {

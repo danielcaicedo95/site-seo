@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: 'Aviso legal del sitio web de Daniel Caicedo, consultor SEO en Colombia. Conoce los términos y condiciones, políticas de privacidad y más.',
   keywords: ['aviso legal', 'términos y condiciones', 'política de privacidad', 'SEO', 'Colombia'],
   alternates: {
-    canonical: 'https://daniseo.site/aviso-legal',
+    canonical: 'https://daniseo.site/legal/aviso-legal',
   },
 };
 

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: 'Política de privacidad del sitio web de Daniel Caicedo, consultor SEO en Colombia. Conoce cómo recopilamos, usamos y protegemos tus datos personales.',
   keywords: ['política de privacidad', 'privacidad', 'SEO', 'Colombia'],
   alternates: {
-    canonical: 'https://daniseo.site/politica-de-privacidad',
+    canonical: 'https://daniseo.site/legal/politica-de-privacidad',
   },
 };
 
