@@ -55,9 +55,10 @@ const Portada: React.FC<PortadaProps> = ({ imagen, titulo, descripcion }) => {
           className="mt-6"
         >
           <a
-            href="#contacto"
+            href="https://wa.link/zmryyx"
             className="px-6 py-3 text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg border border-transparent hover:border-white shadow-md hover:shadow-blue-400/50 transition-all duration-300 drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]"
             aria-label="Ir a la sección de contacto"
+            target="_blank"
           >
             Hablemos
           </a>

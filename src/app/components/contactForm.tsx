@@ -64,6 +64,7 @@ export default function Contacto() {
 
   return (
     <motion.div
+      id="contact-form"
       className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 to-blue-900 p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -82,7 +83,7 @@ export default function Contacto() {
         }}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl w-full bg-gray-800 bg-opacity-75 rounded-lg shadow-2xl p-8">
+      <div  className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl w-full bg-gray-800 bg-opacity-75 rounded-lg shadow-2xl p-8">
         <motion.div
           className="flex flex-col justify-center text-white"
           initial={{ x: -50, opacity: 0 }}

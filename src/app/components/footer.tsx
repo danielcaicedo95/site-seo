@@ -6,10 +6,12 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const Footer = () => {
-  const [mostrarFormulario, setMostrarFormulario] = useState(false);
-
-  const toggleFormulario = useCallback(() => {
-    setMostrarFormulario((prev) => !prev);
+  // Función que desplaza la vista al formulario
+  const scrollToFormulario = useCallback(() => {
+    const formElement = document.getElementById("contact-form");
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: "smooth" });
+    }
   }, []);
 
   return (
@@ -48,28 +50,28 @@ const Footer = () => {
           {
             title: "Legal",
             links: [
-              { name: "Aviso Legal", url: "/aviso-legal" },
-              { name: "Política de Privacidad", url: "/politica-de-privacidad" },
-              { name: "Política de Cookies", url: "/politica-de-cookies" },
+              { name: "Aviso Legal", url: "/legal/aviso-legal" },
+              { name: "Política de Privacidad", url: "/legal/politica-de-privacidad" },
+              { name: "Política de Cookies", url: "/legal/politica-de-cookies" },
             ],
           },
           {
             title: "SEO por Ciudades",
             links: [
-              { name: "SEO Cali", url: "/seo-cali" },
-              { name: "SEO Bogotá", url: "/seo-bogota" },
-              { name: "SEO Medellín", url: "/seo-medellin" },
-              { name: "SEO Pasto", url: "/seo-pasto" },
+              { name: "SEO Cali", url: "/servicios" },
+              { name: "SEO Bogotá", url: "/servicios" },
+              { name: "SEO Medellín", url: "/servicios" },
+              { name: "SEO Pasto", url: "/servicios" },
             ],
           },
           {
             title: "Servicios",
             links: [
-              { name: "SEO", url: "/seo" },
-              { name: "SEM", url: "/sem" },
-              { name: "Desarrollo", url: "/desarrollo" },
-              { name: "IA SEO", url: "/ia-seo" },
-              { name: "Automatización", url: "/automatizacion" },
+              { name: "SEO", url: "/servicios" },
+              { name: "SEM", url: "/servicios" },
+              { name: "Desarrollo", url: "/servicios" },
+              { name: "IA SEO", url: "/servicios" },
+              { name: "Automatización", url: "/servicios" },
             ],
           },
           {
@@ -109,69 +111,14 @@ const Footer = () => {
 
       {/* 🔹 Botón de contacto */}
       <div className="text-center mt-10">
-        <motion.button
+      <motion.button
           className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:scale-105 transition transform duration-300 shadow-lg"
-          onClick={toggleFormulario}
+          onClick={scrollToFormulario}
         >
           📩 Contáctanos
         </motion.button>
       </div>
 
-      {/* 🔹 Formulario emergente (lazy load) */}
-      {mostrarFormulario && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md z-50">
-          <motion.div
-            className="bg-gray-800 p-6 rounded-lg shadow-lg w-11/12 md:w-96 text-white"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <h3 className="text-xl font-bold mb-4 text-center">
-              Déjanos tus datos
-            </h3>
-
-            {/* Nombre */}
-            <input
-              type="text"
-              placeholder="Tu nombre"
-              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring focus:ring-blue-300 mb-3"
-            />
-
-            {/* Empresa */}
-            <input
-              type="text"
-              placeholder="Empresa (opcional)"
-              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring focus:ring-blue-300 mb-3"
-            />
-
-            {/* Email */}
-            <input
-              type="email"
-              placeholder="Tu correo electrónico"
-              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring focus:ring-blue-300 mb-3"
-            />
-
-            {/* Mensaje */}
-            <textarea
-              placeholder="¿En qué podemos ayudarte?"
-              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring focus:ring-blue-300 mb-3"
-            ></textarea>
-
-            {/* Botón de Enviar */}
-            <button className="px-5 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white font-semibold rounded-lg hover:scale-105 transition transform duration-300 w-full">
-              Enviar
-            </button>
-
-            {/* Cerrar */}
-            <button
-              className="mt-3 text-gray-400 underline block text-center"
-              onClick={toggleFormulario}
-            >
-              Cancelar
-            </button>
-          </motion.div>
-        </div>
-      )}
     </footer>
   );
 };
