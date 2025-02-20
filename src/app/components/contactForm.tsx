@@ -126,7 +126,7 @@ export default function Contacto() {
             <Suspense fallback={<div className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600">Loading...</div>}>
               <PhoneInput
                 international
-                defaultCountry="US"
+                defaultCountry="CO"
                 value={formData.telefono}
                 onChange={handlePhoneChange}
                 className="w-full p-3 rounded bg-white text-black border border-gray-600 focus:border-purple-500 focus:outline-none"

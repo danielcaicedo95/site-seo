@@ -16,13 +16,13 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-white py-12 relative overflow-hidden">
-      {/* 🔹 Fondo con efecto futurista (optimizado) */}
+      {/* Fondo con efecto futurista */}
       <div className="absolute inset-0 opacity-20">
         <div className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 blur-md md:blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-5 gap-8 relative z-10">
-        {/* 🔹 Logo + Información SEO */}
+        {/* Logo e Información SEO */}
         <motion.div
           className="md:col-span-1"
           initial={{ opacity: 0, y: -20 }}
@@ -45,7 +45,7 @@ const Footer = () => {
           </p>
         </motion.div>
 
-        {/* 🔹 Sección reutilizable para enlaces */}
+        {/* Secciones de enlaces (Legal, Ciudades, Servicios, Navegación) */}
         {[
           {
             title: "Legal",
@@ -58,20 +58,20 @@ const Footer = () => {
           {
             title: "SEO por Ciudades",
             links: [
-              { name: "SEO Cali", url: "/servicios" },
-              { name: "SEO Bogotá", url: "/servicios" },
-              { name: "SEO Medellín", url: "/servicios" },
-              { name: "SEO Pasto", url: "/servicios" },
+              { name: "SEO Cali", url: "/seo-cali" },
+              { name: "SEO Bogotá", url: "/seo-bogota" },
+              { name: "SEO Medellín", url: "/seo-medellin" },
+              { name: "SEO Pasto", url: "/seo-pasto" },
             ],
           },
           {
             title: "Servicios",
             links: [
-              { name: "SEO", url: "/servicios" },
-              { name: "SEM", url: "/servicios" },
-              { name: "Desarrollo", url: "/servicios" },
-              { name: "IA SEO", url: "/servicios" },
-              { name: "Automatización", url: "/servicios" },
+              { name: "SEO", url: "/seo" },
+              { name: "SEM", url: "/sem" },
+              { name: "Desarrollo", url: "/desarrollo" },
+              { name: "IA SEO", url: "/ia-seo" },
+              { name: "Automatización", url: "/automatizacion" },
             ],
           },
           {
@@ -109,16 +109,42 @@ const Footer = () => {
         ))}
       </div>
 
-      {/* 🔹 Botón de contacto */}
-      <div className="text-center mt-10">
-      <motion.button
-          className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:scale-105 transition transform duration-300 shadow-lg"
-          onClick={scrollToFormulario}
+      {/* Sección de botones para redes sociales */}
+      <div className="container mx-auto px-4 md:px-6 mt-10 flex flex-col md:flex-row items-center justify-center gap-6 relative z-10">
+        <Link
+          href="https://www.linkedin.com/in/dcaicedo/"
+          target="_blank"
+          className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 rounded-lg shadow-lg hover:scale-105 transition transform duration-300"
         >
-          📩 Contáctanos
-        </motion.button>
+          <Image
+            src="/images/linkedin.png"
+            alt="LinkedIn"
+            width={24}
+            height={24}
+          />
+          <span className="text-white font-semibold">LinkedIn</span>
+        </Link>
+        <Link
+          href="https://github.com/danielcaicedo95"
+          target="_blank"
+          className="flex items-center gap-2 bg-gradient-to-r from-gray-700 to-gray-900 px-4 py-2 rounded-lg shadow-lg hover:scale-105 transition transform duration-300"
+        >
+          <Image
+            src="/images/github.png"
+            alt="GitHub"
+            width={24}
+            height={24}
+          />
+          <span className="text-white font-semibold">GitHub</span>
+        </Link>
       </div>
 
+      {/* Créditos */}
+      <div className="text-center mt-8 relative z-10">
+        <p className="text-sm text-gray-400">
+          Sitio web hecho por Daniel Caicedo en Next.js
+        </p>
+      </div>
     </footer>
   );
 };
