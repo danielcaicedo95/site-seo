@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Especialista SEO en Colombia con más de 6 años de experiencia usando diferentes CMS, como WordPress, Magento, Shopify y Drupal. Experto en SEO para eCommerce y aumento de tráfico orgánico. Haz clic para conocerme.",
   keywords: ["inicio", "Next.js", "SEO"],
   alternates: {
-    canonical: "https://home.com",
+    canonical: "https://daniseo.site/contacto",
   },
 };
 

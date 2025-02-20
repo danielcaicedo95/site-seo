@@ -6,14 +6,15 @@ import FlujoTrabajo from "@/app/components/flujoTrabajo";
 import FAQ from "../components/faqs";
 import { Metadata } from 'next';
 import Footer from "@/app/components/footer";
+import Contacto from "../components/contactForm";
 
 export const metadata: Metadata = {
   title: 'Consultoria SEO - Posiciona tu web rapidamente | Daniel C.	',
   description:
     'Potencia tu negocio con estrategias de posicionamiento web efectivas. Ofrezco consultoría SEO en Colombia, optimización On Site y Off Page. Backlinking, auditoría SEO y redacción especializada. Implementa una estrategia SEO web que te ayude a posicionar tu página rápidamente con las mejores prácticas',
-  keywords: ['inicio', 'Next.js', 'SEO'],
+  keywords: ['servicios seo', 'Next.js', 'SEO', "seo colombia"],
   alternates: {
-    canonical: 'https://home.com',
+    canonical: 'https://daniseo.site/servicios',
   },
 };
 
@@ -90,6 +91,8 @@ const Servicios = () => {
       <FlujoTrabajo />
 
       <FAQ faqs={faqs} />
+
+      <Contacto/>
 
       {/* Footer */}
       <Footer />

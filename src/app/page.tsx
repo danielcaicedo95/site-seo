@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   description: 'Especialista SEO en Colombia con más de 6 años de experiencia usando diferentes CMS, como WordPress, Magento, Shopify y Drupal. Experto en SEO para eCommerce y aumento de tráfico orgánico. Haz clic para conocerme.', // Descripción específica
   keywords: ['inicio', 'Next.js', 'SEO'], // Palabras clave específicas
   alternates: {
-    canonical: 'https://home.com', // URL canónica específica
+    canonical: 'https://daniseo.site', // URL canónica específica
   },
 };
 
@@ -50,28 +50,28 @@ const Home: React.FC = () => {
     {
       titulo: "SEO Técnico",
       descripcion: "Optimizamos la estructura y el rendimiento de tu sitio web para un mejor rastreo por motores de búsqueda.",
-      enlace: "/seo-tecnico",
+      enlace: "/servicios",
       imagen: "/images/servicios-home/seo-tecnico.jpg",
       posicionImagen: "left",
     },
     {
       titulo: "SEO On Page",
       descripcion: "Mejoramos la relevancia de tus páginas mediante optimización de contenido y etiquetas meta.",
-      enlace: "/seo-on-page",
+      enlace: "/servicios",
       imagen: "/images/servicios-home/seo-onpage.jpg",
       posicionImagen: "right",
     },
     {
       titulo: "SEO Off Page",
       descripcion: "Aumentamos la autoridad de tu sitio mediante construcción de enlaces y estrategias de contenido.",
-      enlace: "/seo-off-page",
+      enlace: "/servicios",
       imagen: "/images/servicios-home/seo-offpage.jpg",
       posicionImagen: "left",
     },
     {
       titulo: "SEO IA",
       descripcion: "Impulsamos tu estrategia SEO con inteligencia artificial para análisis avanzado y automatización.",
-      enlace: "/seo-ia",
+      enlace: "/servicios",
       imagen: "/images/servicios-home/seo-ia.jpg",
       posicionImagen: "right",
     },
