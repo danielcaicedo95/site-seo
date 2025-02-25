@@ -7,12 +7,26 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
 import rehypeRaw from "rehype-raw";
-import Navbar from "@/app/components/navbar";
+import { notFound } from "next/navigation";
 
 // 📌 Obtener los slugs de los posts
 export async function generateStaticParams() {
   const postsDirectory = path.join(process.cwd(), "posts");
+
+  // Verificar si la carpeta existe
+  if (!fs.existsSync(postsDirectory)) {
+    console.error("La carpeta 'posts' no existe.");
+    return [];
+  }
+
   const filenames = fs.readdirSync(postsDirectory);
+
+  // Verificar si hay archivos en la carpeta
+  if (filenames.length === 0) {
+    console.error("No hay archivos en la carpeta 'posts'.");
+    return [];
+  }
+
   return filenames.map((filename) => ({ slug: filename.replace(/\.md$/, "") }));
 }
 
@@ -20,6 +34,15 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const postsDirectory = path.join(process.cwd(), "posts");
   const filePath = path.join(postsDirectory, `${params.slug}.md`);
+
+  // Verificar si el archivo existe
+  if (!fs.existsSync(filePath)) {
+    return {
+      title: "Página no encontrada",
+      description: "El post que buscas no existe.",
+    };
+  }
+
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data } = matter(fileContents);
 
@@ -41,6 +64,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function PostPage({ params }: { params: { slug: string } }) {
   const postsDirectory = path.join(process.cwd(), "posts");
   const filePath = path.join(postsDirectory, `${params.slug}.md`);
+
+  // Verificar si el archivo existe
+  if (!fs.existsSync(filePath)) {
+    notFound(); // Mostrar página 404 si el archivo no existe
+  }
+
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(fileContents);
 
@@ -72,7 +101,6 @@ export default async function PostPage({ params }: { params: { slug: string } })
     <article className="container mx-auto px-4 max-w-4xl">
       {/* 📌 Datos estructurados JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-      <Navbar/>
 
       {/* 📌 Portada a pantalla completa */}
       <div className="relative w-full h-[60vh] mb-8 overflow-hidden">
