@@ -1,72 +1,163 @@
-// app/blog/page.tsx
-
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import Link from "next/link";
 import { Metadata } from "next";
+import Image from "next/image";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkRehype from "remark-rehype";
+import rehypeRaw from "rehype-raw";
 
-export const metadata: Metadata = {
-  title: "Blog | Daniel C.",
-  description: "Artículos sobre SEO y marketing digital por Daniel Caicedo.",
-};
-
-interface PostData {
-  title: string;
-  date: string;
-  excerpt?: string;
-}
-
-interface Post {
-  slug: string;
-  data: PostData;
-}
-
-export default function BlogPage() {
+// 📌 Obtener los slugs de los posts
+export async function generateStaticParams() {
   const postsDirectory = path.join(process.cwd(), "posts");
   const filenames = fs.readdirSync(postsDirectory);
+  return filenames.map((filename) => ({ slug: filename.replace(/\.md$/, "") }));
+}
 
-  const posts: Post[] = filenames.map((filename) => {
-    const slug = filename.replace(/\.md$/, "");
-    const filePath = path.join(postsDirectory, filename);
-    const fileContents = fs.readFileSync(filePath, "utf8");
-    const { data } = matter(fileContents);
-    return {
-      slug,
-      data: data as PostData,
+// 📌 Generar metadata SEO dinámica
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const postsDirectory = path.join(process.cwd(), "posts");
+  const filePath = path.join(postsDirectory, `${params.slug}.md`);
+  const fileContents = fs.readFileSync(filePath, "utf8");
+  const { data } = matter(fileContents);
+
+  return {
+    title: data.title ? `${data.title} | Blog` : "Blog Post",
+    description: data.excerpt || "Un artículo de nuestro blog.",
+    alternates: { canonical: `https://daniseo.site/blog/${params.slug}` },
+    openGraph: {
+      title: data.title,
+      description: data.excerpt,
+      images: data.coverImage ? [{ url: `https://daniseo.site${data.coverImage}` }] : [],
+      type: "article",
+      publishedTime: data.date,
+    },
+  };
+}
+
+// 📌 Página del post con diseño futurista
+export default async function PostPage({ params }: { params: { slug: string } }) {
+  const postsDirectory = path.join(process.cwd(), "posts");
+  const filePath = path.join(postsDirectory, `${params.slug}.md`);
+  const fileContents = fs.readFileSync(filePath, "utf8");
+  const { data, content } = matter(fileContents);
+
+  // 🛠 Datos estructurados JSON-LD
+  const structuredData: any = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: data.title,
+    image: data.coverImage ? `https://daniseo.site${data.coverImage}` : undefined,
+    datePublished: data.date,
+    author: { "@type": "Person", name: "Daniel Caicedo" },
+    description: data.excerpt,
+    mainEntityOfPage: { "@type": "WebPage", "@id": `https://daniseo.site/blog/${params.slug}` },
+  };
+
+  // Agregar FAQ Schema si hay preguntas
+  if (data.faqs) {
+    structuredData.mainEntity = {
+      "@type": "FAQPage",
+      mainEntity: data.faqs.map((faq: any) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: { "@type": "Answer", text: faq.answer },
+      })),
     };
-  });
-
-  // Ordenar posts por fecha descendente
-  posts.sort(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-  );
+  }
 
   return (
-    <div className="container mx-auto py-12 px-4">
-      <h1 className="text-4xl font-bold mb-8 text-center">Blog</h1>
-      <div className="grid grid-cols-1 gap-6">
-        {posts.map((post) => (
-          <div
-            key={post.slug}
-            className="p-6 rounded-lg bg-gradient-to-br from-[#0f172a] to-[#1e293b] transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,204,0.6)]"
-          >
-            <Link href={`/blog/${post.slug}`}>
-              <h2 className="text-2xl font-bold bg-gradient-to-r from-[#00ffcc] to-[#ff0099] bg-clip-text text-transparent">
-                {post.data.title}
-              </h2>
-            </Link>
-            {post.data.excerpt && (
-              <p className="mt-2 text-gray-300">{post.data.excerpt}</p>
-            )}
-            {post.data.date && (
-              <p className="mt-2 text-sm text-gray-400">
-                {new Date(post.data.date).toLocaleDateString()}
-              </p>
-            )}
-          </div>
-        ))}
+    <article className="container mx-auto px-4 max-w-4xl">
+      {/* 📌 Datos estructurados JSON-LD */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+
+      {/* 📌 Portada a pantalla completa */}
+      <div className="relative w-full h-[60vh] mb-8 overflow-hidden">
+        {data.coverImage && (
+          <Image
+            src={data.coverImage}
+            alt={data.title}
+            fill
+            className="object-cover brightness-90"
+            priority
+          />
+        )}
+        <h1 className="absolute inset-0 flex items-center justify-center text-5xl font-bold text-white text-center bg-gradient-to-r from-purple-800/50 to-blue-800/50 px-6 leading-snug">
+          {data.title}
+        </h1>
       </div>
-    </div>
+
+      {/* 📌 Fecha */}
+      {data.date && (
+        <p className="text-center text-sm text-gray-400 mb-8">
+          {new Date(data.date).toLocaleDateString()}
+        </p>
+      )}
+
+      {/* 📌 Contenido del post con diseño futurista */}
+      <div className="prose prose-invert max-w-none mx-auto text-lg leading-relaxed">
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm, remarkRehype]}
+          rehypePlugins={[rehypeRaw]}
+          components={{
+            iframe: ({ node, ...props }) => {
+              if (!node || !("properties" in node)) return null;
+              return (
+                <div className="relative w-full h-64 md:h-96 my-8 overflow-hidden rounded-lg shadow-lg border-2 border-purple-500/50">
+                  <iframe
+                    src={node.properties?.src as string}
+                    className="w-full h-full rounded-lg"
+                    title="Video"
+                    frameBorder="0"
+                    allowFullScreen
+                  />
+                </div>
+              );
+            },
+            img: ({ node, ...props }) => {
+              if (!node || !("properties" in node)) return null;
+              return (
+                <div className="my-8 flex justify-center">
+                  <Image
+                    src={node.properties?.src as string}
+                    alt={node.properties?.alt as string}
+                    width={800}
+                    height={450}
+                    className="rounded-lg shadow-lg border-2 border-purple-500/50 hover:border-cyan-500/50 transition-all duration-300"
+                  />
+                </div>
+              );
+            },
+            p: ({ node, children }) => {
+              if (node && "children" in node && Array.isArray(node.children)) {
+                const firstChild = node.children[0];
+                if ("tagName" in firstChild && firstChild.tagName === "img") {
+                  return <>{children}</>;
+                }
+              }
+              return <p className="text-gray-300">{children}</p>;
+            },
+            a: ({ node, ...props }) => (
+              <a
+                className="text-cyan-400 hover:text-cyan-300 transition duration-300"
+                {...props}
+              />
+            ),
+            h1: ({ node, ...props }) => (
+              <h1 className="text-4xl font-bold text-purple-400 mb-6" {...props} />
+            ),
+            h2: ({ node, ...props }) => (
+              <h2 className="text-3xl font-bold text-blue-400 mb-4" {...props} />
+            ),
+            h3: ({ node, ...props }) => (
+              <h3 className="text-2xl font-bold text-purple-300 mb-3" {...props} />
+            ),
+          }}
+        >
+          {content}
+        </ReactMarkdown>
+      </div>
+    </article>
   );
 }
