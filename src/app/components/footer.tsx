@@ -58,10 +58,10 @@ const Footer = () => {
           {
             title: "SEO por Ciudades",
             links: [
-              { name: "SEO Cali", url: "/servicios" },
-              { name: "SEO Bogotá", url: "/servicios" },
-              { name: "SEO Medellín", url: "/servicios" },
-              { name: "SEO Pasto", url: "/servicios" },
+              { name: "SEO Cali", url: "/servicios/seo-cali" },
+              { name: "SEO Bogotá", url: "/servicios/seo-bogota" },
+              { name: "SEO Medellín", url: "/servicios/seo-medellin" },
+              { name: "SEO Pasto", url: "/servicios/seo-pasto" },
             ],
           },
           {

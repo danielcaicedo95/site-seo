@@ -7,14 +7,14 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
     unoptimized: false,
-    // Añadir esta configuración para controlar el comportamiento de precarga
     minimumCacheTTL: 60,
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // Usar domains solo si cargas imágenes de dominios externos
-    // domains: ['tu-dominio.com'], 
   },
-  // Revisa si esta configuración experimental sigue siendo válida en Next.js 15+
+  env: {
+    NEXT_PUBLIC_SANITY_PROJECT_ID: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  },
   experimental: {
     scrollRestoration: false,
   },
