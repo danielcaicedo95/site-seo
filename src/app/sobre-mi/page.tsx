@@ -8,6 +8,7 @@ import Educacion from "../components/educacion";
 import Habilidades from "../components/habilidades";
 import ProyectosPersonales from "../components/proyectos";
 import ContactForm from "../components/contactForm";
+import Cms from "../components/cms";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -32,6 +33,7 @@ const About = () => {
       <Carrusel />
       <Educacion />
       <Habilidades />
+      <Cms/>
       <ProyectosPersonales />
       <ContactForm />
       <Footer />

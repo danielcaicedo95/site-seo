@@ -63,10 +63,10 @@ const Cms = () => {
       itemType="https://schema.org/SoftwareApplication"
     >
       <h2 className="text-3xl font-bold text-[#00ffcc] mb-4" itemProp="name">
-        Expertos en los CMS más populares
+        SEO para los CMS mas populares
       </h2>
       <p itemProp="description" className="text-gray-300 mb-8">
-        Hemos trabajado con las plataformas más utilizadas en el mundo. Nos adaptamos a cualquier CMS.
+        He trabajado con las plataformas más utilizadas en el mundo.
       </p>
 
       <div className="cms-grid grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">

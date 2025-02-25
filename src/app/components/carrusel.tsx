@@ -47,14 +47,14 @@ export default function Carrusel() {
         .carrusel-container {
           position: relative;
           width: 100%;
-          max-width: 1200px;
+          max-width: 1600px;
           margin: auto;
           overflow: hidden;
           padding: 10px 0;
           background: rgb(17 24 39 / var(--tw-bg-opacity, 1));
           border-radius: 12px;
           box-shadow: 0px 4px 20px rgba(0, 255, 255, 0.3);
-          margin-top: 10px;
+          margin-top: 1px;
         }
 
         .hidden {

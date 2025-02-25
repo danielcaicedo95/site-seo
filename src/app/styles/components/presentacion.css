@@ -7,8 +7,8 @@
   background: linear-gradient(135deg, #111322, #1c1e38);
   padding: 3rem;
   border-radius: 20px;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-  margin: 2rem auto;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.9);
+  margin: 0.1rem auto;
   max-width: 1200px;
   color: #ffffff;
   position: relative;
