@@ -11,34 +11,14 @@ import { notFound } from "next/navigation";
 
 // 📌 Definir el tipo de los parámetros
 interface PageProps {
-  params: { slug: string };
-}
-
-// 📌 Obtener los slugs de los posts
-export async function generateStaticParams() {
-  const postsDirectory = path.join(process.cwd(), "posts");
-
-  // Verificar si la carpeta existe
-  if (!fs.existsSync(postsDirectory)) {
-    console.error("La carpeta 'posts' no existe.");
-    return [];
-  }
-
-  const filenames = fs.readdirSync(postsDirectory);
-
-  // Verificar si hay archivos en la carpeta
-  if (filenames.length === 0) {
-    console.error("No hay archivos en la carpeta 'posts'.");
-    return [];
-  }
-
-  return filenames.map((filename) => ({ slug: filename.replace(/\.md$/, "") }));
+  params: Promise<{ slug: string }>;
 }
 
 // 📌 Generar metadata SEO dinámica
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params; // Usar `await` para acceder a `params`
   const postsDirectory = path.join(process.cwd(), "posts");
-  const filePath = path.join(postsDirectory, `${params.slug}.md`);
+  const filePath = path.join(postsDirectory, `${slug}.md`);
 
   // Verificar si el archivo existe
   if (!fs.existsSync(filePath)) {
@@ -54,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: data.title ? `${data.title} | Blog` : "Blog Post",
     description: data.excerpt || "Un artículo de nuestro blog.",
-    alternates: { canonical: `https://daniseo.site/blog/${params.slug}` },
+    alternates: { canonical: `https://daniseo.site/blog/${slug}` },
     openGraph: {
       title: data.title,
       description: data.excerpt,
@@ -67,8 +47,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 // 📌 Página del post con diseño futurista
 export default async function PostPage({ params }: PageProps) {
+  const { slug } = await params; // Usar `await` para acceder a `params`
   const postsDirectory = path.join(process.cwd(), "posts");
-  const filePath = path.join(postsDirectory, `${params.slug}.md`);
+  const filePath = path.join(postsDirectory, `${slug}.md`);
 
   // Verificar si el archivo existe
   if (!fs.existsSync(filePath)) {
@@ -87,7 +68,7 @@ export default async function PostPage({ params }: PageProps) {
     datePublished: data.date,
     author: { "@type": "Person", name: "Daniel Caicedo" },
     description: data.excerpt,
-    mainEntityOfPage: { "@type": "WebPage", "@id": `https://daniseo.site/blog/${params.slug}` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": `https://daniseo.site/blog/${slug}` },
   };
 
   // Agregar FAQ Schema si hay preguntas

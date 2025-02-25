@@ -13,14 +13,12 @@ const nextConfig = {
     domains: ['daniseo.site'], // Permitir imágenes de daniseo.site
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**.daniseo.site', // Permite imágenes desde cualquier subdominio
+        protocol: "https",
+        hostname: "daniseo.site",
+        port: "",
+        pathname: "/images/**",
       },
     ],
-  },
-  env: {
-    NEXT_PUBLIC_SANITY_PROJECT_ID: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-    NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET,
   },
   experimental: {
     scrollRestoration: false,

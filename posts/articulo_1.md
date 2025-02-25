@@ -19,7 +19,7 @@ SGE (Search Generative Experience) está revolucionando el SEO. Te explico cómo
 
 Google está integrando IA generativa en sus resultados de búsqueda, lo que cambia la visibilidad de los sitios web.
 
-![Ejemplo de SGE](https://daniseo.site/images/sge-example.png)
+![Ejemplo de SGE](https://daniseo.site/images/portada1.jpg)
 
 <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
 

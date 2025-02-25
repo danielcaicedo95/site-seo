@@ -1,5 +1,3 @@
-// app/blog/page.tsx
-
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -15,6 +13,7 @@ interface PostData {
   title: string;
   date: string;
   excerpt?: string;
+  coverImage?: string; // Añadir soporte para imágenes de portada
 }
 
 interface Post {
@@ -24,7 +23,32 @@ interface Post {
 
 export default function BlogPage() {
   const postsDirectory = path.join(process.cwd(), "posts");
+
+  // Verificar si la carpeta existe
+  if (!fs.existsSync(postsDirectory)) {
+    return (
+      <div className="container mx-auto py-12 px-4">
+        <h1 className="text-4xl font-bold mb-8 text-center">Blog</h1>
+        <p className="text-center text-gray-300">
+          No se encontraron posts. Por favor, asegúrate de que la carpeta "posts" exista y contenga archivos.
+        </p>
+      </div>
+    );
+  }
+
   const filenames = fs.readdirSync(postsDirectory);
+
+  // Verificar si hay archivos en la carpeta
+  if (filenames.length === 0) {
+    return (
+      <div className="container mx-auto py-12 px-4">
+        <h1 className="text-4xl font-bold mb-8 text-center">Blog</h1>
+        <p className="text-center text-gray-300">
+          No hay posts disponibles en este momento.
+        </p>
+      </div>
+    );
+  }
 
   const posts: Post[] = filenames.map((filename) => {
     const slug = filename.replace(/\.md$/, "");
@@ -51,7 +75,7 @@ export default function BlogPage() {
             key={post.slug}
             className="p-6 rounded-lg bg-gradient-to-br from-[#0f172a] to-[#1e293b] transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,204,0.6)]"
           >
-            <Link href={`/blog/${post.slug}`}>
+            <Link href={`/blog/${post.slug}`} aria-label={`Leer más sobre ${post.data.title}`}>
               <h2 className="text-2xl font-bold bg-gradient-to-r from-[#00ffcc] to-[#ff0099] bg-clip-text text-transparent">
                 {post.data.title}
               </h2>
