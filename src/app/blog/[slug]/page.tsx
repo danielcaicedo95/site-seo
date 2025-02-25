@@ -9,6 +9,11 @@ import remarkRehype from "remark-rehype";
 import rehypeRaw from "rehype-raw";
 import { notFound } from "next/navigation";
 
+// 📌 Definir el tipo de los parámetros
+interface PageProps {
+  params: { slug: string };
+}
+
 // 📌 Obtener los slugs de los posts
 export async function generateStaticParams() {
   const postsDirectory = path.join(process.cwd(), "posts");
@@ -31,7 +36,7 @@ export async function generateStaticParams() {
 }
 
 // 📌 Generar metadata SEO dinámica
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const postsDirectory = path.join(process.cwd(), "posts");
   const filePath = path.join(postsDirectory, `${params.slug}.md`);
 
@@ -61,7 +66,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 // 📌 Página del post con diseño futurista
-export default async function PostPage({ params }: { params: { slug: string } }) {
+export default async function PostPage({ params }: PageProps) {
   const postsDirectory = path.join(process.cwd(), "posts");
   const filePath = path.join(postsDirectory, `${params.slug}.md`);
 
