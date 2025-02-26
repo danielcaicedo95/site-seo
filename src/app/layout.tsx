@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   publisher: 'Daniel Caicedo', // Publisher global
   robots: 'index, follow', // Comportamiento de los robots de búsqueda
   icons: {
-    icon: '/favicon.ico', // Favicon global
+    icon: '/images/favicon/favicon.ico', // Favicon global
   },
   alternates: {
     canonical: 'https://example.com', // URL canónica global
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'es_ES', // Idioma global
-    url: 'https://example.com',
+    url: 'daniseo.site',
     siteName: 'SEO Dani',
   },
 };

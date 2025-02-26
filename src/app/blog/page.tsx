@@ -88,9 +88,12 @@ export default function BlogPage() {
                 {new Date(post.data.date).toLocaleDateString()}
               </p>
             )}
+
+            
           </div>
         ))}
       </div>
+      
     </div>
   );
 }

@@ -8,6 +8,7 @@ import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
 import rehypeRaw from "rehype-raw";
 import { notFound } from "next/navigation";
+import FuturisticLogo from "@/app/components/futuristicLogo";
 
 // 📌 Definir el tipo de los parámetros
 interface PageProps {
@@ -173,7 +174,9 @@ export default async function PostPage({ params }: PageProps) {
         >
           {content}
         </ReactMarkdown>
+        <FuturisticLogo/>
       </div>
     </article>
+    
   );
 }
