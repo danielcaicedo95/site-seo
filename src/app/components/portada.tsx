@@ -12,22 +12,23 @@ interface PortadaProps {
 const Portada: React.FC<PortadaProps> = ({ imagen, titulo, descripcion }) => {
   return (
     <section className="relative w-full min-h-[500px] sm:min-h-[600px] md:min-h-[700px] flex items-center justify-center overflow-hidden">
-      {/* Imagen optimizada con precarga automática controlada */}
+      {/* Imagen optimizada con mejoras LCP */}
       <Image
         src={imagen}
         alt="Portada background"
         fill
-        priority={true} // ¡Este es el único necesario para precargar!
-        quality={75}
+        priority
+        quality={80}
         className="object-cover object-center -z-10"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+        placeholder="blur"
+        blurDataURL="data:image/webp;base64,UklGRh4CAABXRUJQVlA4TBECAAAvHwAHEFWHgrZtVSn+3yEiBMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMMwDMM="
       />
 
-      {/* Contenedor semi-transparente */}
+      {/* Resto del componente se mantiene igual */}
       <div className="absolute inset-0 bg-black bg-opacity-50 -z-5"></div>
 
-      {/* Contenido principal */}
       <div className="relative flex flex-col items-center text-center px-6 py-6 bg-black bg-opacity-40 rounded-xl max-w-[90%] sm:max-w-[70%]">
-        {/* Título futurista */}
         <motion.h1
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -37,7 +38,6 @@ const Portada: React.FC<PortadaProps> = ({ imagen, titulo, descripcion }) => {
           {titulo}
         </motion.h1>
 
-        {/* Descripción */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,7 +47,6 @@ const Portada: React.FC<PortadaProps> = ({ imagen, titulo, descripcion }) => {
           {descripcion}
         </motion.p>
 
-        {/* Botón futurista */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
