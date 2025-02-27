@@ -19,14 +19,14 @@ export const metadata: Metadata = {
   
   description: 'Descripción global de mi sitio web.',
   keywords: ['Next.js', 'SEO', 'Dani'], // Palabras clave globales
-  authors: [{ name: 'Daniel', url: 'https://example.com' }], // Autor global
+  authors: [{ name: 'Daniel', url: 'https://daniseo.site' }], // Autor global
   publisher: 'Daniel Caicedo', // Publisher global
   robots: 'index, follow', // Comportamiento de los robots de búsqueda
   icons: {
     icon: '/images/favicon/favicon.ico', // Favicon global
   },
   alternates: {
-    canonical: 'https://example.com', // URL canónica global
+    canonical: 'https://daniseo.site', // URL canónica global
   },
   openGraph: {
     type: 'website',
