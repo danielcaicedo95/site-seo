@@ -14,6 +14,9 @@ import Reseñas from "@/app/components/reseñas";
 import Footer from "@/app/components/footer"; 
 import FAQ from "./components/faqs";
 import Contacto from "./components/contactForm";
+import StructuredData from "@/app/components/StructuredData";
+
+
 
 // 🔹 Definir la interfaz aquí directamente para evitar errores
 interface Servicio {
@@ -123,6 +126,7 @@ const Home: React.FC = () => {
 
   return (
     <div>
+      <StructuredData />
       <Navbar />
       <Portada imagen={portadaData.imagen} titulo={portadaData.titulo} descripcion={portadaData.descripcion} />
       

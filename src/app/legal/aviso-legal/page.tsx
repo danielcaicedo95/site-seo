@@ -93,7 +93,7 @@ const AvisoLegal: React.FC = () => {
             La privacidad de los usuarios es importante. Los datos personales recopilados a través del sitio web se tratarán de acuerdo con la legislación colombiana y se utilizarán únicamente para los fines especificados en la política de privacidad.
           </p>
           <p>
-            Para más detalles, consulta la <a href="/politica-de-privacidad" className="text-blue-500 underline">Política de Privacidad</a>.
+            Para más detalles, consulta la <a href="/legal/politica-de-privacidad" className="text-blue-500 underline">Política de Privacidad</a>.
           </p>
         </section>
 
