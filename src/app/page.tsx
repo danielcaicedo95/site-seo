@@ -53,7 +53,7 @@ const Home: React.FC = () => {
     {
       titulo: "SEO Técnico",
       descripcion: "Optimizamos la estructura y el rendimiento de tu sitio web para un mejor rastreo por motores de búsqueda.",
-      enlace: "/servicios",
+      enlace: "/servicios/seo-tecnico",
       imagen: "/images/servicios-home/seo-tecnico.jpg",
       posicionImagen: "left",
     },

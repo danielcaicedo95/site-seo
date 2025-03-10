@@ -68,6 +68,7 @@ const Footer = () => {
             title: "Servicios",
             links: [
               { name: "SEO", url: "/servicios" },
+              { name: "SEO Tecnico", url: "/servicios/seo-tecnico" },
               { name: "SEM", url: "/servicios" },
               { name: "Desarrollo", url: "/servicios" },
               { name: "IA SEO", url: "/servicios" },
