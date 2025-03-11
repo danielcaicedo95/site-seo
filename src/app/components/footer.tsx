@@ -69,6 +69,8 @@ const Footer = () => {
             links: [
               { name: "SEO", url: "/servicios" },
               { name: "SEO Tecnico", url: "/servicios/seo-tecnico" },
+              { name: "SEO OnPage", url: "/servicios/seo-on-page" },
+              { name: "SEO OffPage", url: "/servicios/seo-off-page" },
               { name: "SEM", url: "/servicios" },
               { name: "Desarrollo", url: "/servicios" },
               { name: "IA SEO", url: "/servicios" },

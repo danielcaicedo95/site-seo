@@ -8,7 +8,7 @@ import Footer from "@/app/components/footer";
 import Contacto from "@/app/components/contactForm";
 import ServiciosTecnicos from "@/app/components/serviciosTecnicos";
 import BeneficiosTodo from "@/app/components/BeneficiosTodo";
-
+import Cms from "@/app/components/cms";
 
 
 interface Beneficio {
@@ -171,7 +171,7 @@ const Servicios = () => {
       descripcionSeccion="El SEO técnico no solo mejora tu posicionamiento en Google, sino que también optimiza la experiencia del usuario y la eficiencia de tu sitio. Descubre sus beneficios clave:"
 
     />
-
+      <Cms/>
       <FlujoTrabajo />
 
       <FAQ faqs={faqs} />

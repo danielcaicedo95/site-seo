@@ -2,17 +2,24 @@
 module.exports = {
     siteUrl: 'https://daniseo.site', // Cambia esto por tu dominio
     generateRobotsTxt: true, // Genera un archivo robots.txt
-    sitemapSize: 7000, // Divide el sitemap en archivos más pequeños si es necesario
-    exclude: ['/server-sitemap.xml'], // Excluye rutas que no quieras en el sitemap
+    sitemapSize: 5000, // Reduce el tamaño para evitar sobrecarga
+    exclude: ['/server-sitemap.xml', '/admin', '/dashboard', '/api/*'], // Excluye rutas sensibles
     robotsTxtOptions: {
       policies: [
         {
           userAgent: '*',
           allow: '/',
+          disallow: ['/admin', '/dashboard', '/api/*', '/private/*'], // Bloquea rutas irrelevantes para SEO
+        },
+        {
+          userAgent: 'Googlebot',
+          allow: '/',
+          disallow: ['/server-sitemap.xml', '/hidden-page'], // Control específico para Google
         },
       ],
       additionalSitemaps: [
-        'https://tudominio.com/server-sitemap.xml', // Si tienes un sitemap dinámico
+        'https://daniseo.site/sitemap.xml', // Sitemap principal
+        'https://daniseo.site/server-sitemap.xml', // Sitemap dinámico del servidor
       ],
     },
-  };
+};

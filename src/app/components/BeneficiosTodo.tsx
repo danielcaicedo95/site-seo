@@ -78,15 +78,15 @@ const BeneficiosTodo = ({
               viewport={{ once: true, amount: 0.2 }}
               className={`flex flex-col ${
                 beneficio.posicionImagen === "right" ? "md:flex-row-reverse" : "md:flex-row"
-              } items-center gap-8`}
+              } items-center gap-8 bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/10 hover:border-cyan-400/30 transition-all duration-300 hover:scale-105 shadow-lg`}
             >
               {/* Imagen */}
-              <div className="w-full md:w-1/2 relative h-96 rounded-xl overflow-hidden shadow-lg">
+              <div className="w-full md:w-1/2 relative h-96 rounded-xl overflow-hidden">
                 <Image
                   src={beneficio.imagen}
                   alt={beneficio.titulo}
                   fill
-                  className="object-cover"
+                  className="object-cover rounded-xl hover:scale-105 transition-transform duration-300"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority={index < 2} // Prioriza las primeras imágenes
                 />
