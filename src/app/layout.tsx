@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
-
-
+import Providers from "./components/provider"; // Importa el componente Providers
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,23 +15,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  
-  description: 'Descripción global de mi sitio web.',
-  keywords: ['Next.js', 'SEO', 'Dani'], // Palabras clave globales
-  authors: [{ name: 'Daniel', url: 'https://daniseo.site' }], // Autor global
-  publisher: 'Daniel Caicedo', // Publisher global
-  robots: 'index, follow', // Comportamiento de los robots de búsqueda
+  description: "Descripción global de mi sitio web.",
+  keywords: ["Next.js", "SEO", "Dani"], // Palabras clave globales
+  authors: [{ name: "Daniel", url: "https://daniseo.site" }], // Autor global
+  publisher: "Daniel Caicedo", // Publisher global
+  robots: "index, follow", // Comportamiento de los robots de búsqueda
   icons: {
-    icon: '/images/favicon/favicon.ico', // Favicon global
+    icon: "/images/favicon/favicon.ico", // Favicon global
   },
   alternates: {
-    canonical: 'https://daniseo.site', // URL canónica global
+    canonical: "https://daniseo.site", // URL canónica global
   },
   openGraph: {
-    type: 'website',
-    locale: 'es_ES', // Idioma global
-    url: 'daniseo.site',
-    siteName: 'SEO Dani',
+    type: "website",
+    locale: "es_ES", // Idioma global
+    url: "daniseo.site",
+    siteName: "SEO Dani",
   },
 };
 
@@ -60,7 +58,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* Envuelve children con Providers */}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
