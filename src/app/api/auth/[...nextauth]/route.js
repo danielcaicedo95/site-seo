@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import { authOptions } from "@/app/api/auth/authOptions"; // Ajusta la ruta si es necesario
+import { authOptions } from "@/app/lib/authOptions"; // Asegúrate de que la ruta sea correcta
 
 const handler = NextAuth(authOptions);
 
