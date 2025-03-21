@@ -9,12 +9,13 @@ import KeywordCannibalization from "@/app/components/search-tool/KeywordCannibal
 import KeywordPotential from "@/app/components/search-tool/KeywordPotential";
 import Login from "@/app/components/search-tool/Login";
 import { useKeywordData } from "@/app/components/search-tool/UseKeywordData";
+import LongMetricsDashboard from "@/app/components/search-tool/LongMetrics/LongMetricsDashboard";
 
 export default function AuditoriaSearchConsole() {
   const { data: session } = useSession();
   const [sites, setSites] = useState<string[]>([]);
   const [selectedSite, setSelectedSite] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"analytics" | "analyzer" | "cannibalization" | "potential">("analytics");
+  const [activeTab, setActiveTab] = useState<"analytics" | "analyzer" | "cannibalization" | "potential" | "longmetrics">("analytics");
   const [keywordData, setKeywordData] = useState<any[]>([]);
 
   const { keywords, loading, error } = useKeywordData(selectedSite);
@@ -75,6 +76,12 @@ export default function AuditoriaSearchConsole() {
               >
                 🚀 Keyword Potential
               </button>
+              <button
+                className={`px-4 py-2 ml-2 ${activeTab === "longmetrics" ? "bg-blue-500 text-white" : "bg-gray-200"} rounded-t`}
+                onClick={() => setActiveTab("longmetrics")}
+              >
+                📈 LongMetrics
+              </button>
             </div>
 
             <div className="p-4 border border-t-0 bg-white">
@@ -90,8 +97,10 @@ export default function AuditoriaSearchConsole() {
                 <KeywordAnalyzer data={keywordData} />
               ) : activeTab === "cannibalization" ? (
                 <KeywordCannibalization data={keywordData} />
-              ) : (
+              ) : activeTab === "potential" ? (
                 <KeywordPotential data={keywordData} />
+              ) : (
+                <LongMetricsDashboard siteUrl={selectedSite} />
               )}
             </div>
           </>
