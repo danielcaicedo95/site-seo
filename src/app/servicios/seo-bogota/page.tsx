@@ -13,9 +13,9 @@ import { Fragment } from "react";
 import Presentacion from "@/app/components/presentacion";
 
 export const metadata: Metadata = {
-  title: "Consultor SEO Bogotá - Servicios SEO Bogotá | Daniel C.",
+  title: "SEO en Bogotá | Agencia de Marketing Digital y Auditoría Local",
   description:
-    "Impulsa tu negocio en Bogotá con estrategias SEO locales. Descubre consultoría, auditoría, posicionamiento web y marketing digital en Bogotá para transformar tu presencia online.",
+    "Mejora la visibilidad de tu negocio en Bogotá con estrategias SEO comprobadas. Optimiza tu sitio, destaca en Google Maps y realiza auditorías web locales con la experiencia de la agencia oficial en marketing digital.",
   keywords: [
     "agencia seo bogota",
     "agencia de posicionamiento seo bogota",
@@ -53,8 +53,8 @@ const presentacionData = {
 const ServiciosBogota = () => {
   const portadaData = {
     imagen: "/images/portada-bogota.jpg",
-    titulo: "Servicios SEO en Bogotá: Posicionamiento Web de Alto Impacto",
-    descripcion: "Potencia tu negocio en Bogotá con estrategias digitales a medida",
+    titulo: "Optimiza tu presencia digital en Bogotá con nuestro SEO local",
+    descripcion: "Mejora tu visibilidad en buscadores, alcanza a clientes locales y supera a la competencia.",
   };
 
   const faqs = [
@@ -123,27 +123,24 @@ const ServiciosBogota = () => {
 
       {/* Sección: Problemas de crecimiento */}
       <section className="bg-gradient-to-br from-[#0f172a] to-[#1e293b] text-white py-8 px-4 rounded-lg mx-auto max-w-5xl text-center my-6 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,204,0.6)]">
-        <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#00ffcc] to-[#ff0099] bg-clip-text text-transparent">
-          ¿Problemas para hacer crecer tu web en Bogotá?
-        </h2>
-        <p className="mt-4 text-base md:text-lg text-gray-300 max-w-xl mx-auto leading-relaxed">
-          Según un estudio de la Cámara de Comercio de Bogotá, hasta el 72% de las empresas en la capital
-          enfrentan desafíos para aumentar su tráfico web y convertir visitantes en clientes.
-          
-        </p>
-      </section>
+  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#00ffcc] to-[#ff0099] bg-clip-text text-transparent">
+    Auditoría SEO Local
+  </h2>
+  <p className="mt-4 text-base md:text-lg text-gray-300 max-w-xl mx-auto leading-relaxed">
+    Nuestro servicio de auditoría se basa en un análisis profundo de los elementos clave que impulsan la visibilidad online en Bogotá. Identificamos las áreas de mejora en el posicionamiento, detectamos oportunidades estratégicas y te brindamos recomendaciones precisas para destacar en un mercado altamente competitivo. Las evaluaciones detalladas y personalizadas muestran cómo mejorar la presencia de tu sitio, haciendo énfasis en la relevancia de “seo”, “bogotá” y otros términos esenciales para conectar con tu público.
+  </p>
+</section>
 
-      {/* Sección: Soluciones SEO */}
-      <section className="bg-gradient-to-br from-[#0f172a] to-[#1e293b] text-white py-8 px-4 rounded-lg mx-auto max-w-5xl text-center my-6 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,204,0.6)]">
-        <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#00ffcc] to-[#ff0099] bg-clip-text text-transparent">
-          Soluciones SEO para impulsar tu negocio en Bogotá
-        </h2>
-        <p className="mt-4 text-base md:text-lg text-gray-300 max-w-xl mx-auto leading-relaxed">
-          Implementa estrategias locales, optimización on-page y campañas de link building que han
-          demostrado aumentar el tráfico orgánico en hasta un 60% en el competitivo mercado bogotano.
-          
-        </p>
-      </section>
+{/* Sección: Soluciones SEO */}
+<section className="bg-gradient-to-br from-[#0f172a] to-[#1e293b] text-white py-8 px-4 rounded-lg mx-auto max-w-5xl text-center my-6 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,204,0.6)]">
+  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#00ffcc] to-[#ff0099] bg-clip-text text-transparent">
+    Gestión de Google My Business y Local Listings
+  </h2>
+  <p className="mt-4 text-base md:text-lg text-gray-300 max-w-xl mx-auto leading-relaxed">
+    Potencia tu estrategia local con soluciones integrales que maximizan la presencia de tu negocio en buscadores y mapas. Nuestra optimización te ayuda a resaltar en los directorios y plataformas clave, posicionando tu empresa como referente en el ámbito digital de Bogotá. Aprovechamos insights basados en los términos más influyentes y las tendencias emergentes, garantizando que cada aspecto de tu perfil digital impulse la conversión y visibilidad.
+  </p>
+</section>
+
 
       {/* Presentación del experto */}
       <Presentacion
