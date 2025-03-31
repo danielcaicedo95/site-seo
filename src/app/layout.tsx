@@ -42,6 +42,23 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
+        
+        {/* Google Analytics */}
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-JDG3H84QBF" strategy="afterInteractive" />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-JDG3H84QBF', {
+                page_path: window.location.pathname,
+              });
+            `,
+          }}
+        />
         {/* 🔹 Código de Clarity Tracking */}
         <Script
           id="clarity-script"
