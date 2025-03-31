@@ -1,6 +1,6 @@
 ---
 title: "Posicionamiento en Google 2025: Dominar los Resultados de Búsqueda"  
-date: "2026-03-19"  
+date: "2025-03-19"  
 excerpt: "Aprende las estrategias esenciales de SEO técnico para posicionar tu sitio web en los primeros resultados de búsqueda de Google y aumentar tu visibilidad online."  
 coverImage: "/images/portada1.jpg"  
 ---
