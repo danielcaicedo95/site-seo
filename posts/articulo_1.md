@@ -1,5 +1,5 @@
 ---
-title: "Posicionamiento en Buscadores 2025: La Guía Definitiva para Generar Tráfico Orgánico"
+title: "Generar Autoridad de Marca de manera organica"
 date: "2025-02-25"
 excerpt: "Descubre cómo dominar los motores de búsqueda en 2025 con estrategias de autoridad de marca y SEO futurista."
 coverImage: "/images/post/post1.jpg"

@@ -10,18 +10,18 @@ import rehypeRaw from "rehype-raw";
 import { notFound } from "next/navigation";
 import Navbar from "@/app/components/navbar";
 
-// 📌 Definir el tipo de los parámetros
+// Define the type for the parameters
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// 📌 Generar metadata SEO dinámica
+// Generate dynamic SEO metadata
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params; // Usar `await` para acceder a `params`
+  const { slug } = await params;
   const postsDirectory = path.join(process.cwd(), "posts");
   const filePath = path.join(postsDirectory, `${slug}.md`);
 
-  // Verificar si el archivo existe
+  // If the post file does not exist, return metadata for a 404 page
   if (!fs.existsSync(filePath)) {
     return {
       title: "Página no encontrada",
@@ -46,21 +46,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-// 📌 Página del post con diseño profesional y responsivo
+// Main post page component with enhanced UX/UI for mobile and desktop
 export default async function PostPage({ params }: PageProps) {
-  const { slug } = await params; // Usar `await` para acceder a `params`
+  const { slug } = await params;
   const postsDirectory = path.join(process.cwd(), "posts");
   const filePath = path.join(postsDirectory, `${slug}.md`);
 
-  // Verificar si el archivo existe
+  // If the file doesn't exist, show the 404 page
   if (!fs.existsSync(filePath)) {
-    notFound(); // Mostrar página 404 si el archivo no existe
+    notFound();
   }
 
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(fileContents);
 
-  // 🛠 Datos estructurados JSON-LD
+  // Structured JSON-LD data for SEO
   const structuredData: any = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -72,7 +72,7 @@ export default async function PostPage({ params }: PageProps) {
     mainEntityOfPage: { "@type": "WebPage", "@id": `https://daniseo.site/blog/${slug}` },
   };
 
-  // Agregar FAQ Schema si hay preguntas
+  // Add FAQ Schema if FAQs are provided
   if (data.faqs) {
     structuredData.mainEntity = {
       "@type": "FAQPage",
@@ -85,43 +85,42 @@ export default async function PostPage({ params }: PageProps) {
   }
 
   return (
-    <div>
-      {/* 📌 Navbar */}
+    <div className="min-h-screen bg-gray-50">
+      {/* Navbar */}
       <Navbar />
 
-      {/* 📌 Contenedor principal del artículo */}
-      <article className="container mx-auto px-4 max-w-4xl mt-16">
-        {/* 📌 Datos estructurados JSON-LD */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      {/* Main article container */}
+      <article className="container mx-auto px-4 max-w-4xl mt-16 pb-16">
+        {/* Structured Data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
 
-        {/* 📌 Título con fondo futurista */}
-        <div className="w-full mb-8 p-6 rounded-lg bg-gradient-to-r from-purple-900 to-blue-900 shadow-lg">
-          <h1 className="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            {data.title}
-          </h1>
-        </div>
+        {/* Nota: El título del post se usa únicamente en el metadata. */}
 
-        {/* 📌 Fecha */}
+        {/* Publication Date */}
         {data.date && (
           <p className="text-center text-sm text-gray-600 mb-8">
             Publicado el {new Date(data.date).toLocaleDateString()}
           </p>
         )}
 
-        {/* 📌 Contenido del post con diseño profesional y responsivo */}
-        <div className="prose prose-sm md:prose-lg max-w-none mx-auto text-[#333333]">
+        {/* Post Content with responsive and well-spaced design */}
+        <div className="prose prose-sm md:prose-lg lg:prose-xl max-w-none mx-auto text-gray-800">
           <ReactMarkdown
             remarkPlugins={[remarkGfm, remarkRehype]}
             rehypePlugins={[rehypeRaw]}
             components={{
+              // Custom rendering for iframes
               iframe: ({ node, ...props }) => {
                 if (!node || !("properties" in node)) return null;
                 return (
-                  <div className="relative w-full aspect-video my-8 overflow-hidden rounded-lg shadow-lg border-2 border-gray-200">
+                  <div className="relative w-full aspect-video my-8 overflow-hidden rounded-lg shadow-lg border border-gray-200">
                     <iframe
                       src={node.properties?.src as string}
                       className="w-full h-full rounded-lg"
-                      title="Video"
+                      title="Embedded Video"
                       frameBorder="0"
                       allowFullScreen
                       loading="lazy"
@@ -129,6 +128,7 @@ export default async function PostPage({ params }: PageProps) {
                   </div>
                 );
               },
+              // Custom rendering for images using Next.js Image component
               img: ({ node, ...props }) => {
                 if (!node || !("properties" in node)) return null;
                 return (
@@ -138,12 +138,13 @@ export default async function PostPage({ params }: PageProps) {
                       alt={node.properties?.alt as string}
                       width={800}
                       height={450}
-                      className="rounded-lg shadow-lg border-2 border-gray-200 hover:border-gray-300 transition-all duration-300"
+                      className="rounded-lg shadow-lg border border-gray-200 hover:border-gray-300 transition-all duration-300"
                       loading="lazy"
                     />
                   </div>
                 );
               },
+              // Custom paragraph styling
               p: ({ node, children }) => {
                 if (node && "children" in node && Array.isArray(node.children)) {
                   const firstChild = node.children[0];
@@ -151,22 +152,25 @@ export default async function PostPage({ params }: PageProps) {
                     return <>{children}</>;
                   }
                 }
-                return <p className="text-[#333333]">{children}</p>;
+                return <p className="my-4 text-gray-800 leading-relaxed">{children}</p>;
               },
+              // Custom link styling
               a: ({ node, ...props }) => (
                 <a
                   className="text-blue-600 hover:text-blue-500 transition duration-300"
                   {...props}
                 />
               ),
+              // Headings styling (evitando renderizar el título principal si ya se usó en metadata)
               h1: ({ node, ...props }) => (
-                <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-6" {...props} />
+                // Omitir el h1 principal para no duplicar el título
+                <></>
               ),
               h2: ({ node, ...props }) => (
-                <h2 className="text-2xl md:text-3xl font-bold text-[#333333] mb-4" {...props} />
+                <h2 className="mt-6 mb-3 text-2xl md:text-3xl font-bold text-gray-800" {...props} />
               ),
               h3: ({ node, ...props }) => (
-                <h3 className="text-xl md:text-2xl font-bold text-[#333333] mb-3" {...props} />
+                <h3 className="mt-5 mb-2 text-xl md:text-2xl font-bold text-gray-800" {...props} />
               ),
             }}
           >
