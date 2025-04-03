@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
 import { Metadata } from "next";
@@ -10,57 +10,74 @@ import rehypeRaw from "rehype-raw";
 import { notFound } from "next/navigation";
 import Navbar from "@/app/components/navbar";
 
-// Define the type for the parameters
+// Define el tipo para los parámetros
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Generate dynamic SEO metadata
+// Función auxiliar para obtener la ruta completa del post
+const getPostFilePath = async (slug: string) => {
+  const postsDirectory = path.join(process.cwd(), "posts");
+  return path.join(postsDirectory, `${slug}.md`);
+};
+
+// Función para limpiar el contenido de tokens no deseados y eliminar numeración redundante en encabezados
+const cleanMarkdownContent = (content: string): string => {
+  return content
+    // Elimina tokens de referencia, por ejemplo: ![ref1] o [ref1]
+    .replace(/!\[ref\d*\]/g, "")
+    .replace(/\[ref\d*\]/g, "")
+    // Elimina numeración redundante al inicio de línea seguida de un encabezado
+    .replace(/^\s*\d+\.\s*(#+)/gm, '$1');
+};
+
+// Genera metadatos SEO dinámicos
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const postsDirectory = path.join(process.cwd(), "posts");
-  const filePath = path.join(postsDirectory, `${slug}.md`);
+  const filePath = await getPostFilePath(slug);
 
-  // If the post file does not exist, return metadata for a 404 page
-  if (!fs.existsSync(filePath)) {
+  try {
+    const fileContents = await fs.readFile(filePath, "utf8");
+    const { data } = matter(fileContents);
+
+    return {
+      title: data.title ? `${data.title} | Blog` : "Blog Post",
+      description: data.excerpt || "Un artículo de nuestro blog.",
+      alternates: { canonical: `https://daniseo.site/blog/${slug}` },
+      openGraph: {
+        title: data.title,
+        description: data.excerpt,
+        images: data.coverImage ? [{ url: `https://daniseo.site${data.coverImage}` }] : [],
+        type: "article",
+        publishedTime: data.date,
+      },
+    };
+  } catch (error) {
     return {
       title: "Página no encontrada",
       description: "El post que buscas no existe.",
     };
   }
-
-  const fileContents = fs.readFileSync(filePath, "utf8");
-  const { data } = matter(fileContents);
-
-  return {
-    title: data.title ? `${data.title} | Blog` : "Blog Post",
-    description: data.excerpt || "Un artículo de nuestro blog.",
-    alternates: { canonical: `https://daniseo.site/blog/${slug}` },
-    openGraph: {
-      title: data.title,
-      description: data.excerpt,
-      images: data.coverImage ? [{ url: `https://daniseo.site${data.coverImage}` }] : [],
-      type: "article",
-      publishedTime: data.date,
-    },
-  };
 }
 
-// Main post page component with enhanced UX/UI for mobile and desktop
+// Página principal del post con mejoras en UX/UI
 export default async function PostPage({ params }: PageProps) {
   const { slug } = await params;
-  const postsDirectory = path.join(process.cwd(), "posts");
-  const filePath = path.join(postsDirectory, `${slug}.md`);
+  const filePath = await getPostFilePath(slug);
 
-  // If the file doesn't exist, show the 404 page
-  if (!fs.existsSync(filePath)) {
+  try {
+    await fs.access(filePath);
+  } catch {
     notFound();
   }
 
-  const fileContents = fs.readFileSync(filePath, "utf8");
+  const fileContents = await fs.readFile(filePath, "utf8");
   const { data, content } = matter(fileContents);
 
-  // Structured JSON-LD data for SEO
+  // Limpieza del contenido markdown para eliminar tokens no deseados y numeración redundante
+  const cleanContent = cleanMarkdownContent(content);
+
+  // Datos estructurados JSON-LD para SEO
   const structuredData: any = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -72,7 +89,6 @@ export default async function PostPage({ params }: PageProps) {
     mainEntityOfPage: { "@type": "WebPage", "@id": `https://daniseo.site/blog/${slug}` },
   };
 
-  // Add FAQ Schema if FAQs are provided
   if (data.faqs) {
     structuredData.mainEntity = {
       "@type": "FAQPage",
@@ -86,95 +102,109 @@ export default async function PostPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
       <Navbar />
 
-      {/* Main article container */}
       <article className="container mx-auto px-4 max-w-4xl mt-16 pb-16">
-        {/* Structured Data for SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
 
-        {/* Nota: El título del post se usa únicamente en el metadata. */}
-
-        {/* Publication Date */}
         {data.date && (
           <p className="text-center text-sm text-gray-600 mb-8">
             Publicado el {new Date(data.date).toLocaleDateString()}
           </p>
         )}
 
-        {/* Post Content with responsive and well-spaced design */}
         <div className="prose prose-sm md:prose-lg lg:prose-xl max-w-none mx-auto text-gray-800">
           <ReactMarkdown
             remarkPlugins={[remarkGfm, remarkRehype]}
             rehypePlugins={[rehypeRaw]}
             components={{
-              // Custom rendering for iframes
-              iframe: ({ node, ...props }) => {
-                if (!node || !("properties" in node)) return null;
-                return (
-                  <div className="relative w-full aspect-video my-8 overflow-hidden rounded-lg shadow-lg border border-gray-200">
-                    <iframe
-                      src={node.properties?.src as string}
-                      className="w-full h-full rounded-lg"
-                      title="Embedded Video"
-                      frameBorder="0"
-                      allowFullScreen
-                      loading="lazy"
-                    />
-                  </div>
-                );
-              },
-              // Custom rendering for images using Next.js Image component
-              img: ({ node, ...props }) => {
-                if (!node || !("properties" in node)) return null;
-                return (
-                  <div className="my-8 flex justify-center">
-                    <Image
-                      src={node.properties?.src as string}
-                      alt={node.properties?.alt as string}
-                      width={800}
-                      height={450}
-                      className="rounded-lg shadow-lg border border-gray-200 hover:border-gray-300 transition-all duration-300"
-                      loading="lazy"
-                    />
-                  </div>
-                );
-              },
-              // Custom paragraph styling
-              p: ({ node, children }) => {
-                if (node && "children" in node && Array.isArray(node.children)) {
-                  const firstChild = node.children[0];
-                  if ("tagName" in firstChild && firstChild.tagName === "img") {
-                    return <>{children}</>;
-                  }
-                }
-                return <p className="my-4 text-gray-800 leading-relaxed">{children}</p>;
-              },
-              // Custom link styling
-              a: ({ node, ...props }) => (
-                <a
-                  className="text-blue-600 hover:text-blue-500 transition duration-300"
-                  {...props}
+              // Renderizado personalizado para iframes
+              iframe: ({ src, title, ...props }) => (
+                <div className="relative w-full aspect-video my-8 overflow-hidden rounded-lg shadow-lg border border-gray-200">
+                  <iframe
+                    src={src as string}
+                    title={title || "Embedded Video"}
+                    className="w-full h-full rounded-lg"
+                    frameBorder="0"
+                    allowFullScreen
+                    loading="lazy"
+                    {...props}
+                  />
+                </div>
+              ),
+              // Renderizado personalizado para imágenes usando Next.js Image
+              img: ({ src, alt }) => (
+                <Image
+                  src={src as string}
+                  alt={alt as string}
+                  width={500} // Ajusta esto al tamaño real de tu imagen
+                  height={250} // Ajusta esto al tamaño real de tu imagen
+                  className="rounded-lg shadow-lg border border-gray-200 hover:border-gray-300 transition-all duration-300 mx-auto"
+                  loading="lazy"
+                  unoptimized
                 />
               ),
-              // Headings styling (evitando renderizar el título principal si ya se usó en metadata)
-              h1: ({ node, ...props }) => (
-                // Omitir el h1 principal para no duplicar el título
-                <></>
+
+              
+              
+              
+              
+              // Estilo personalizado para párrafos
+              p: ({ children, ...props }) => (
+                <p className="my-4 text-gray-800 leading-relaxed" {...props}>
+                  {children}
+                </p>
               ),
-              h2: ({ node, ...props }) => (
-                <h2 className="mt-6 mb-3 text-2xl md:text-3xl font-bold text-gray-800" {...props} />
+              // Estilo personalizado para enlaces
+              a: ({ href, children, ...props }) => (
+                <a
+                  href={href as string}
+                  className="text-blue-600 hover:text-blue-500 transition duration-300"
+                  {...props}
+                >
+                  {children}
+                </a>
               ),
-              h3: ({ node, ...props }) => (
-                <h3 className="mt-5 mb-2 text-xl md:text-2xl font-bold text-gray-800" {...props} />
+              // Estilo personalizado para tablas
+              table: ({ children }) => (
+                <div className="overflow-x-auto my-6">
+                  <table className="w-full border-collapse border border-gray-300 text-left">
+                    {children}
+                  </table>
+                </div>
+              ),
+
+              th: ({ children }) => (
+                <th className="border border-gray-300 px-4 py-2 bg-gray-100 font-semibold text-gray-700">
+                  {children}
+                </th>
+              ),
+
+              td: ({ children }) => (
+                <td className="border border-gray-300 px-4 py-2 text-gray-600">{children}</td>
+              ),
+              // Encabezados con estilos mejorados para una buena UX
+              h1: ({ children, ...props }) => (
+                <h1 className="mt-8 mb-4 text-5xl font-extrabold text-gray-900" {...props}>
+                  {children}
+                </h1>
+              ),
+              h2: ({ children, ...props }) => (
+                <h2 className="mt-6 mb-3 text-4xl font-bold text-gray-800" {...props}>
+                  {children}
+                </h2>
+              ),
+              h3: ({ children, ...props }) => (
+                <h3 className="mt-5 mb-2 text-3xl font-semibold text-gray-700" {...props}>
+                  {children}
+                </h3>
               ),
             }}
           >
-            {content}
+            {cleanContent}
           </ReactMarkdown>
         </div>
       </article>
